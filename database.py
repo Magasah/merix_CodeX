@@ -28,6 +28,8 @@ def init_db():
                 username TEXT,
                 first_name TEXT,
                 language TEXT DEFAULT 'ru',
+                referrer_id INTEGER,
+                balance INTEGER DEFAULT 0,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 last_interaction TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
@@ -43,7 +45,8 @@ def init_db():
 
 
 def add_user(user_id: int, username: Optional[str] = None, 
-             first_name: Optional[str] = None, language: str = 'ru') -> bool:
+             first_name: Optional[str] = None, language: str = 'ru', 
+             referrer_id: Optional[int] = None) -> bool:
     """
     Добавляет нового пользователя в базу данных
     
@@ -52,6 +55,7 @@ def add_user(user_id: int, username: Optional[str] = None,
         username: Username пользователя (опционально)
         first_name: Имя пользователя (опционально)
         language: Язык интерфейса (по умолчанию 'ru')
+        referrer_id: ID пригласившего пользователя (опционально)
         
     Returns:
         bool: True если пользователь добавлен, False если уже существует
@@ -68,13 +72,13 @@ def add_user(user_id: int, username: Optional[str] = None,
         
         # Добавляем нового пользователя
         cursor.execute('''
-            INSERT INTO users (user_id, username, first_name, language)
-            VALUES (?, ?, ?, ?)
-        ''', (user_id, username, first_name, language))
+            INSERT INTO users (user_id, username, first_name, language, referrer_id)
+            VALUES (?, ?, ?, ?, ?)
+        ''', (user_id, username, first_name, language, referrer_id))
         
         conn.commit()
         conn.close()
-        logger.info(f"➕ Добавлен новый пользователь: {user_id}")
+        logger.info(f"➕ Добавлен новый пользователь: {user_id} (реферер: {referrer_id})")
         return True
         
     except Exception as e:
@@ -228,4 +232,69 @@ def user_exists(user_id: int) -> bool:
         
     except Exception as e:
         logger.error(f"❌ Ошибка проверки существования пользователя: {e}")
+        return False
+
+
+def get_users_count_today() -> int:
+    """
+    Получает количество новых пользователей за сегодня
+    
+    Returns:
+        int: Количество пользователей, зарегистрированных сегодня
+    """
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+        
+        cursor.execute('''
+            SELECT COUNT(*) FROM users 
+            WHERE DATE(created_at) = DATE('now')
+        ''')
+        count = cursor.fetchone()[0]
+        
+        conn.close()
+        return count
+        
+    except Exception as e:
+        logger.error(f"❌ Ошибка получения статистики за сегодня: {e}")
+        return 0
+
+
+def get_user_info(user_id: int) -> Optional[dict]:
+    """
+    Получает полную информацию о пользователе
+    
+    Args:
+        user_id: Telegram ID пользователя
+        
+    Returns:
+        dict: Словарь с информацией о пользователе или None
+    """
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+        
+        cursor.execute('''
+            SELECT user_id, username, first_name, language, referrer_id, balance, created_at
+            FROM users WHERE user_id = ?
+        ''', (user_id,))
+        
+        result = cursor.fetchone()
+        conn.close()
+        
+        if result:
+            return {
+                'user_id': result[0],
+                'username': result[1],
+                'first_name': result[2],
+                'language': result[3],
+                'referrer_id': result[4],
+                'balance': result[5],
+                'created_at': result[6]
+            }
+        return None
+        
+    except Exception as e:
+        logger.error(f"❌ Ошибка получения информации о пользователе: {e}")
+        return None
         return False

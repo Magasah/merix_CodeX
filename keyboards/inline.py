@@ -11,7 +11,10 @@ def get_services_keyboard(lang: str = 'ru') -> InlineKeyboardMarkup:
         inline_keyboard=[
             [InlineKeyboardButton(text=get_text(lang, 'btn_bots'), callback_data="service_bots")],
             [InlineKeyboardButton(text=get_text(lang, 'btn_websites'), callback_data="service_websites")],
-            [InlineKeyboardButton(text=get_text(lang, 'btn_security'), callback_data="service_security")]
+            [InlineKeyboardButton(text=get_text(lang, 'btn_security'), callback_data="service_security")],
+            [InlineKeyboardButton(text=get_text(lang, 'btn_fast_start'), callback_data="service_fast_start")],
+            [InlineKeyboardButton(text=get_text(lang, 'btn_ai_automation'), callback_data="service_ai_automation")],
+            [InlineKeyboardButton(text=get_text(lang, 'btn_tech_support'), callback_data="service_tech_support")]
         ]
     )
     return keyboard
@@ -47,6 +50,18 @@ def get_admin_keyboard(lang: str = 'ru') -> InlineKeyboardMarkup:
         inline_keyboard=[
             [InlineKeyboardButton(text=get_text(lang, 'btn_statistics'), callback_data="admin_stats")],
             [InlineKeyboardButton(text=get_text(lang, 'btn_broadcast'), callback_data="admin_broadcast")]
+        ]
+    )
+    return keyboard
+
+
+def get_reviews_keyboard(lang: str = 'ru') -> InlineKeyboardMarkup:
+    """Создает клавиатуру для отзывов"""
+    keyboard = InlineKeyboardMarkup(
+        inline_keyboard=[
+            [InlineKeyboardButton(text=get_text(lang, 'btn_read_reviews'), url="https://t.me/merix_codex")],
+            [InlineKeyboardButton(text=get_text(lang, 'btn_write_review'), callback_data="write_review")],
+            [InlineKeyboardButton(text=get_text(lang, 'btn_back'), callback_data="back_to_main")]
         ]
     )
     return keyboard

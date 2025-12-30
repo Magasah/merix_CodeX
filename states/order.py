@@ -12,3 +12,18 @@ class OrderStates(StatesGroup):
     
     # Состояние: ожидание подтверждения заказа
     waiting_for_confirmation = State()
+
+
+class BroadcastStates(StatesGroup):
+    """Состояния для процесса рассылки"""
+    
+    # Состояние: ожидание сообщения для рассылки
+    waiting_for_message = State()
+
+
+class ReviewStates(StatesGroup):
+    """Состояния для процесса написания отзыва"""
+    
+    # Состояние: ожидание текста отзыва
+    waiting_for_review = State()
+

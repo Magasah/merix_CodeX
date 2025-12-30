@@ -1,12 +1,15 @@
 """
-Обработчик команды /start с выбором языка
+Обработчик команды /start с выбором языка и реферальной системой
 """
 from aiogram import Router, types, F
-from aiogram.filters import CommandStart
+from aiogram.filters import CommandStart, Command
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from keyboards.reply import get_main_keyboard
 from translations import get_text, LANGUAGE_FLAGS, LANGUAGE_NAMES
 import database as db
+import logging
+
+logger = logging.getLogger(__name__)
 
 # Создаем роутер для обработчиков команды start
 router = Router()
@@ -38,29 +41,48 @@ def get_language_keyboard() -> InlineKeyboardMarkup:
 
 
 @router.message(CommandStart())
-async def cmd_start(message: types.Message):
+async def cmd_start(message: types.Message, command: Command = None):
     """
-    Обработчик команды /start
+    Обработчик команды /start с поддержкой реферальных ссылок
+    Формат: /start или /start 12345 (где 12345 - ID реферера)
     Если пользователь новый - показывает выбор языка
     Если существующий - показывает приветствие на его языке
     """
     user = message.from_user
     
-    # Обновляем время последнего взаимодействия
-    db.update_last_interaction(user.id)
+    # Извлекаем referrer_id из команды (если есть)
+    referrer_id = None
+    if message.text and len(message.text.split()) > 1:
+        try:
+            referrer_id = int(message.text.split()[1])
+            logger.info(f"👥 Пользователь {user.id} пришел по реферальной ссылке от {referrer_id}")
+        except ValueError:
+            referrer_id = None
     
     # Проверяем, существует ли пользователь в БД
     user_lang = db.get_user_language(user.id)
     
     if user_lang is None:
-        # Новый пользователь - показываем выбор языка
+        # Новый пользователь - сохраняем с referrer_id
+        db.add_user(
+            user_id=user.id,
+            username=user.username,
+            first_name=user.first_name,
+            language='ru',  # Временно, пока не выберет язык
+            referrer_id=referrer_id
+        )
+        
+        # Показываем выбор языка
         await message.answer(
             text=get_text('ru', 'choose_language'),
             reply_markup=get_language_keyboard(),
             parse_mode="HTML"
         )
     else:
-        # Существующий пользователь - приветствие
+        # Существующий пользователь - обновляем взаимодействие
+        db.update_last_interaction(user.id)
+        
+        # Приветствие
         await message.answer(
             text=get_text(user_lang, 'welcome', name=user.first_name),
             reply_markup=get_main_keyboard(user_lang),
@@ -78,26 +100,16 @@ async def set_language(callback: types.CallbackQuery):
     lang = callback.data.split("_")[1]
     user = callback.from_user
     
-    # Проверяем, существует ли пользователь
-    if db.user_exists(user.id):
-        # Обновляем язык
-        db.update_user_language(user.id, lang)
-    else:
-        # Добавляем нового пользователя
-        db.add_user(
-            user_id=user.id,
-            username=user.username,
-            first_name=user.first_name,
-            language=lang
-        )
+    # Обновляем язык пользователя в БД
+    db.update_user_language(user.id, lang)
     
-    # Отправляем уведомление о выборе языка
+    # Отправляем подтверждение
     await callback.message.edit_text(
         text=get_text(lang, 'language_set'),
         parse_mode="HTML"
     )
     
-    # Отправляем приветствие с главным меню
+    # Отправляем приветствие с главной клавиатурой
     await callback.message.answer(
         text=get_text(lang, 'welcome', name=user.first_name),
         reply_markup=get_main_keyboard(lang),
