@@ -49,19 +49,53 @@ def get_admin_keyboard(lang: str = 'ru') -> InlineKeyboardMarkup:
     keyboard = InlineKeyboardMarkup(
         inline_keyboard=[
             [InlineKeyboardButton(text=get_text(lang, 'btn_statistics'), callback_data="admin_stats")],
+            [InlineKeyboardButton(text=get_text(lang, 'btn_active_orders'), callback_data="admin_orders")],
             [InlineKeyboardButton(text=get_text(lang, 'btn_broadcast'), callback_data="admin_broadcast")]
         ]
     )
     return keyboard
 
 
-def get_reviews_keyboard(lang: str = 'ru') -> InlineKeyboardMarkup:
-    """Создает клавиатуру для отзывов"""
+def get_profile_keyboard(lang: str = 'ru') -> InlineKeyboardMarkup:
+    """Создает клавиатуру профиля"""
     keyboard = InlineKeyboardMarkup(
         inline_keyboard=[
-            [InlineKeyboardButton(text=get_text(lang, 'btn_read_reviews'), url="https://t.me/merix_codex")],
-            [InlineKeyboardButton(text=get_text(lang, 'btn_write_review'), callback_data="write_review")],
-            [InlineKeyboardButton(text=get_text(lang, 'btn_back'), callback_data="back_to_main")]
+            [InlineKeyboardButton(text=get_text(lang, 'btn_settings'), callback_data="profile_settings")],
+            [InlineKeyboardButton(text=get_text(lang, 'btn_my_orders'), callback_data="profile_orders")]
+        ]
+    )
+    return keyboard
+
+
+def get_settings_keyboard(lang: str = 'ru') -> InlineKeyboardMarkup:
+    """Создает клавиатуру настроек"""
+    keyboard = InlineKeyboardMarkup(
+        inline_keyboard=[
+            [InlineKeyboardButton(text=get_text(lang, 'btn_change_language'), callback_data="change_language")],
+            [InlineKeyboardButton(text=get_text(lang, 'btn_back'), callback_data="back_to_profile")]
+        ]
+    )
+    return keyboard
+
+
+def get_help_keyboard() -> InlineKeyboardMarkup:
+    """Создает клавиатуру для раздела помощи"""
+    keyboard = InlineKeyboardMarkup(
+        inline_keyboard=[
+            [InlineKeyboardButton(text="👨‍💻 Менеджер", url="https://t.me/noxsec")]
+        ]
+    )
+    return keyboard
+
+
+def get_order_management_keyboard(order_id: int, lang: str = 'ru') -> InlineKeyboardMarkup:
+    """Создает клавиатуру управления заказом для админа"""
+    keyboard = InlineKeyboardMarkup(
+        inline_keyboard=[
+            [InlineKeyboardButton(text=get_text(lang, 'btn_set_working'), callback_data=f"order_status_{order_id}_In Progress")],
+            [InlineKeyboardButton(text=get_text(lang, 'btn_set_done'), callback_data=f"order_status_{order_id}_Done")],
+            [InlineKeyboardButton(text=get_text(lang, 'btn_set_cancelled'), callback_data=f"order_status_{order_id}_Cancelled")],
+            [InlineKeyboardButton(text=get_text(lang, 'btn_back'), callback_data="admin_orders")]
         ]
     )
     return keyboard

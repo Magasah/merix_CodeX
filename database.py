@@ -35,6 +35,19 @@ def init_db():
             )
         ''')
         
+        # Создаем таблицу заказов
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS orders (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                user_id INTEGER NOT NULL,
+                service_name TEXT NOT NULL,
+                description TEXT NOT NULL,
+                status TEXT DEFAULT 'Pending',
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (user_id) REFERENCES users(user_id)
+            )
+        ''')
+        
         conn.commit()
         conn.close()
         logger.info("✅ База данных успешно инициализирована")
@@ -297,4 +310,180 @@ def get_user_info(user_id: int) -> Optional[dict]:
     except Exception as e:
         logger.error(f"❌ Ошибка получения информации о пользователе: {e}")
         return None
+
+
+# ============= ФУНКЦИИ ДЛЯ РАБОТЫ С ЗАКАЗАМИ =============
+
+def create_order(user_id: int, service_name: str, description: str) -> Optional[int]:
+    """
+    Создает новый заказ в базе данных
+    
+    Args:
+        user_id: Telegram ID пользователя
+        service_name: Название услуги
+        description: Описание заказа
+        
+    Returns:
+        int: ID созданного заказа или None при ошибке
+    """
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+        
+        cursor.execute('''
+            INSERT INTO orders (user_id, service_name, description, status)
+            VALUES (?, ?, ?, 'Pending')
+        ''', (user_id, service_name, description))
+        
+        order_id = cursor.lastrowid
+        conn.commit()
+        conn.close()
+        
+        logger.info(f"📦 Создан новый заказ #{order_id} от пользователя {user_id}")
+        return order_id
+        
+    except Exception as e:
+        logger.error(f"❌ Ошибка создания заказа: {e}")
+        return None
+
+
+def get_user_orders(user_id: int) -> List[Tuple]:
+    """
+    Получает все заказы пользователя
+    
+    Args:
+        user_id: Telegram ID пользователя
+        
+    Returns:
+        List[Tuple]: Список заказов (id, service_name, status, created_at)
+    """
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+        
+        cursor.execute('''
+            SELECT id, service_name, status, created_at
+            FROM orders WHERE user_id = ?
+            ORDER BY created_at DESC
+        ''', (user_id,))
+        
+        orders = cursor.fetchall()
+        conn.close()
+        return orders
+        
+    except Exception as e:
+        logger.error(f"❌ Ошибка получения заказов пользователя: {e}")
+        return []
+
+
+def get_user_orders_count(user_id: int) -> int:
+    """
+    Получает количество заказов пользователя
+    
+    Args:
+        user_id: Telegram ID пользователя
+        
+    Returns:
+        int: Количество заказов
+    """
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+        
+        cursor.execute('SELECT COUNT(*) FROM orders WHERE user_id = ?', (user_id,))
+        count = cursor.fetchone()[0]
+        
+        conn.close()
+        return count
+        
+    except Exception as e:
+        logger.error(f"❌ Ошибка подсчета заказов: {e}")
+        return 0
+
+
+def get_pending_orders() -> List[Tuple]:
+    """
+    Получает все активные заказы (Pending и In Progress) для админ-панели
+    
+    Returns:
+        List[Tuple]: Список заказов с информацией о пользователе
+    """
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+        
+        cursor.execute('''
+            SELECT o.id, o.user_id, u.first_name, u.username, 
+                   o.service_name, o.description, o.status, o.created_at
+            FROM orders o
+            JOIN users u ON o.user_id = u.user_id
+            WHERE o.status IN ('Pending', 'In Progress')
+            ORDER BY o.created_at DESC
+        ''')
+        
+        orders = cursor.fetchall()
+        conn.close()
+        return orders
+        
+    except Exception as e:
+        logger.error(f"❌ Ошибка получения активных заказов: {e}")
+        return []
+
+
+def update_order_status(order_id: int, new_status: str) -> bool:
+    """
+    Обновляет статус заказа
+    
+    Args:
+        order_id: ID заказа
+        new_status: Новый статус ('Pending', 'In Progress', 'Done', 'Cancelled')
+        
+    Returns:
+        bool: True если обновлено успешно
+    """
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+        
+        cursor.execute('''
+            UPDATE orders SET status = ?
+            WHERE id = ?
+        ''', (new_status, order_id))
+        
+        conn.commit()
+        conn.close()
+        
+        logger.info(f"✅ Статус заказа #{order_id} изменен на: {new_status}")
+        return True
+        
+    except Exception as e:
+        logger.error(f"❌ Ошибка обновления статуса заказа: {e}")
         return False
+
+
+def get_order_by_id(order_id: int) -> Optional[Tuple]:
+    """
+    Получает информацию о заказе по ID
+    
+    Args:
+        order_id: ID заказа
+        
+    Returns:
+        Tuple: (id, user_id, service_name, description, status) или None
+    """
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+        
+        cursor.execute('''
+            SELECT id, user_id, service_name, description, status
+            FROM orders WHERE id = ?
+        ''', (order_id,))
+        
+        order = cursor.fetchone()
+        conn.close()
+        return order
+        
+    except Exception as e:
+        logger.error(f"❌ Ошибка получения заказа: {e}")
+        return None

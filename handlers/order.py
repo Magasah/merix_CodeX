@@ -35,14 +35,29 @@ async def confirm_order(callback: types.CallbackQuery, state: FSMContext):
     user = callback.from_user
     user_lang = data.get('user_lang', 'ru')
     username = f"@{user.username}" if user.username else "Не указан"
-    admin_message = get_text('ru', 'admin_new_order', service=data['service_name'], 
-                            name=user.full_name, username=username, user_id=user.id,
-                            language=LANGUAGE_NAMES.get(user_lang, 'Русский'), description=data['description'])
-    try:
-        await callback.bot.send_message(chat_id=config.ADMIN_ID, text=admin_message, parse_mode="HTML")
-        await callback.message.edit_text(text=get_text(user_lang, 'order_sent'), parse_mode="HTML")
-    except Exception as e:
+    
+    # Сохраняем заказ в базу данных
+    order_id = db.create_order(
+        user_id=user.id,
+        service_name=data['service_name'],
+        description=data['description']
+    )
+    
+    if order_id:
+        # Отправляем уведомление админу с номером заказа
+        admin_message = get_text('ru', 'admin_new_order', service=data['service_name'], 
+                                name=user.full_name, username=username, user_id=user.id,
+                                language=LANGUAGE_NAMES.get(user_lang, 'Русский'), description=data['description'])
+        admin_message = f"📦 <b>Заказ #{order_id}</b>\n\n" + admin_message
+        
+        try:
+            await callback.bot.send_message(chat_id=config.ADMIN_ID, text=admin_message, parse_mode="HTML")
+            await callback.message.edit_text(text=get_text(user_lang, 'order_sent'), parse_mode="HTML")
+        except Exception as e:
+            await callback.message.edit_text(text=get_text(user_lang, 'order_error'), parse_mode="HTML")
+    else:
         await callback.message.edit_text(text=get_text(user_lang, 'order_error'), parse_mode="HTML")
+    
     await state.clear()
     await callback.answer()
 

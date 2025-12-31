@@ -1,17 +1,21 @@
 """
-Обработчик команды /start с выбором языка и реферальной системой
+Обработчик команды /start с правильной последовательностью:
+1. Проверка существования в БД
+2. Если нет - выбор языка
+3. Проверка подписки на канал
+4. Показ главного меню
 """
 from aiogram import Router, types, F
-from aiogram.filters import CommandStart, Command
+from aiogram.filters import CommandStart
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from keyboards.reply import get_main_keyboard
 from translations import get_text, LANGUAGE_FLAGS, LANGUAGE_NAMES
 import database as db
+import config
 import logging
 
 logger = logging.getLogger(__name__)
 
-# Создаем роутер для обработчиков команды start
 router = Router()
 
 
@@ -41,48 +45,29 @@ def get_language_keyboard() -> InlineKeyboardMarkup:
 
 
 @router.message(CommandStart())
-async def cmd_start(message: types.Message, command: Command = None):
+async def cmd_start(message: types.Message):
     """
-    Обработчик команды /start с поддержкой реферальных ссылок
-    Формат: /start или /start 12345 (где 12345 - ID реферера)
-    Если пользователь новый - показывает выбор языка
-    Если существующий - показывает приветствие на его языке
+    Обработчик /start с правильной последовательностью
     """
     user = message.from_user
+    user_id = user.id
     
-    # Извлекаем referrer_id из команды (если есть)
-    referrer_id = None
-    if message.text and len(message.text.split()) > 1:
-        try:
-            referrer_id = int(message.text.split()[1])
-            logger.info(f"👥 Пользователь {user.id} пришел по реферальной ссылке от {referrer_id}")
-        except ValueError:
-            referrer_id = None
-    
-    # Проверяем, существует ли пользователь в БД
-    user_lang = db.get_user_language(user.id)
+    # Шаг A: Проверяем существование в БД
+    user_lang = db.get_user_language(user_id)
     
     if user_lang is None:
-        # Новый пользователь - сохраняем с referrer_id
-        db.add_user(
-            user_id=user.id,
-            username=user.username,
-            first_name=user.first_name,
-            language='ru',  # Временно, пока не выберет язык
-            referrer_id=referrer_id
-        )
-        
-        # Показываем выбор языка
+        # Новый пользователь - показываем выбор языка
+        logger.info(f"👤 Новый пользователь: {user_id}")
         await message.answer(
             text=get_text('ru', 'choose_language'),
             reply_markup=get_language_keyboard(),
             parse_mode="HTML"
         )
     else:
-        # Существующий пользователь - обновляем взаимодействие
-        db.update_last_interaction(user.id)
+        # Существующий пользователь - обновляем время взаимодействия
+        db.update_last_interaction(user_id)
         
-        # Приветствие
+        # Проверяем подписку на канал (middleware уже проверил, но показываем меню)
         await message.answer(
             text=get_text(user_lang, 'welcome', name=user.first_name),
             reply_markup=get_main_keyboard(user_lang),
@@ -93,23 +78,30 @@ async def cmd_start(message: types.Message, command: Command = None):
 @router.callback_query(F.data.startswith("lang_"))
 async def set_language(callback: types.CallbackQuery):
     """
-    Обработчик выбора языка
-    Сохраняет язык в БД и показывает приветствие
+    Шаг B: Сохранение выбранного языка
+    После сохранения языка middleware автоматически проверит подписку
     """
-    # Извлекаем код языка из callback_data
     lang = callback.data.split("_")[1]
     user = callback.from_user
     
-    # Обновляем язык пользователя в БД
-    db.update_user_language(user.id, lang)
+    # Сохраняем пользователя с выбранным языком
+    db.add_user(
+        user_id=user.id,
+        username=user.username,
+        first_name=user.first_name,
+        language=lang
+    )
     
-    # Отправляем подтверждение
+    logger.info(f"✅ Пользователь {user.id} выбрал язык: {lang}")
+    
+    # Подтверждение выбора языка
     await callback.message.edit_text(
         text=get_text(lang, 'language_set'),
         parse_mode="HTML"
     )
     
-    # Отправляем приветствие с главной клавиатурой
+    # Теперь middleware проверит подписку на канал при следующем взаимодействии
+    # Показываем приветственное сообщение
     await callback.message.answer(
         text=get_text(lang, 'welcome', name=user.first_name),
         reply_markup=get_main_keyboard(lang),

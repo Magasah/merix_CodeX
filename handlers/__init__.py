@@ -9,7 +9,6 @@ from .about import router as about_router
 from .help import router as help_router
 from .order import router as order_router
 from .admin import router as admin_router
-from .reviews import router as reviews_router
 
 # Список всех роутеров для регистрации в главном файле
 routers = [
@@ -20,8 +19,7 @@ routers = [
     profile_router,
     about_router,
     help_router,
-    order_router,
-    reviews_router
+    order_router
 ]
 
 __all__ = ['routers']

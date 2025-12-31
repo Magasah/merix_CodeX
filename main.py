@@ -35,11 +35,10 @@ logger = logging.getLogger(__name__)
 
 
 async def set_bot_commands(bot: Bot):
-    """Устанавливает команды бота в меню"""
+    """Устанавливает команды бота в меню (ТОЛЬКО /start и /help)"""
     commands = [
-        BotCommand(command="start", description="🚀 Перезапуск / Выбор языка"),
-        BotCommand(command="help", description="🆘 Помощь и поддержка"),
-        BotCommand(command="admin", description="🔐 Админ-панель (только для админа)")
+        BotCommand(command="start", description="🚀 Restart"),
+        BotCommand(command="help", description="🆘 Support")
     ]
     await bot.set_my_commands(commands)
 
