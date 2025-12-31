@@ -21,6 +21,7 @@ TRANSLATIONS = {
         # Выбор языка
         'choose_language': '🌍 <b>Выберите язык / Choose language</b>\n\nВыберите предпочитаемый язык для общения с ботом:',
         'language_set': '✅ Язык успешно установлен: <b>Русский</b>',
+        'menu_updated': '🔄 <b>Главное меню обновлено</b>',
         
         # Кнопки главного меню
         'btn_services': '📂 Услуги',
@@ -104,6 +105,13 @@ TRANSLATIONS = {
             '⏱ Срок: 7-10 рабочих дней'
         ),
         
+        # Алиасы для совместимости
+        'service_package': (
+            '<b>📦 Пакет «Быстрый старт»</b>\n\n'
+            'Входит: Сайт-визитка + Telegram-бот + Оформление канала.\n\n'
+            '💰 <b>Цена:</b> от 700 TJS'
+        ),
+        
         'service_ai_automation': (
             '<b>🤖 AI Автоматизация</b>\n\n'
             '💰 <b>Стоимость:</b> от 400 TJS\n'
@@ -117,6 +125,12 @@ TRANSLATIONS = {
             '⏱ Срок: 5-7 рабочих дней'
         ),
         
+        'service_ai': (
+            '<b>🤖 AI-Автоматизация</b>\n\n'
+            'Внедрение умного ассистента, который знает всё о вашем товаре и отвечает клиентам 24/7.\n\n'
+            '💰 <b>Цена:</b> от 400 TJS'
+        ),
+        
         'service_tech_support': (
             '<b>🛡️ Техническая поддержка 24/7</b>\n\n'
             '💰 <b>Стоимость:</b> 150 TJS/месяц\n'
@@ -128,6 +142,12 @@ TRANSLATIONS = {
             '  • Резервное копирование данных\n\n'
             '📋 <b>Официальный договор предоставляется</b>\n'
             '💳 Ежемесячная оплата'
+        ),
+        
+        'service_tech': (
+            '<b>🛡️ Техподдержка</b>\n\n'
+            'Мониторинг 24/7, обновление бота, защита от атак и сбоев.\n\n'
+            '💰 <b>Цена:</b> 150 TJS / мес.'
         ),
         
         # Профиль
@@ -266,6 +286,7 @@ TRANSLATIONS = {
         
         'choose_language': '🌍 <b>Choose language / Выберите язык</b>\n\nSelect your preferred language:',
         'language_set': '✅ Language successfully set: <b>English</b>',
+        'menu_updated': '🔄 <b>Main menu updated</b>',
         
         'btn_services': '📂 Services',
         'btn_profile': '👤 Profile',
@@ -328,6 +349,24 @@ TRANSLATIONS = {
             '  • Monitoring system setup\n\n'
             '📋 <b>Official contract provided</b>\n'
             '<i>We don\'t scare with high prices — everything is discussed individually</i>'
+        ),
+        
+        'service_package': (
+            '<b>📦 "Fast Start" Package</b>\n\n'
+            'Includes: Landing page + Telegram bot + Channel design.\n\n'
+            '💰 <b>Price:</b> from 700 TJS'
+        ),
+        
+        'service_ai': (
+            '<b>🤖 AI Automation</b>\n\n'
+            'Smart assistant implementation that knows everything about your product and responds to customers 24/7.\n\n'
+            '💰 <b>Price:</b> from 400 TJS'
+        ),
+        
+        'service_tech': (
+            '<b>🛡️ Tech Support</b>\n\n'
+            '24/7 monitoring, bot updates, protection from attacks and failures.\n\n'
+            '💰 <b>Price:</b> 150 TJS / month'
         ),
         
         'profile_text': (
@@ -424,6 +463,7 @@ TRANSLATIONS = {
         
         'choose_language': '🌍 <b>Интихоби забон / Choose language</b>\n\nЗабони дилхоҳро интихоб кунед:',
         'language_set': '✅ Забон муваффақона танзим шуд: <b>Тоҷикӣ</b>',
+        'menu_updated': '🔄 <b>Менюи асосӣ навсозӣ шуд</b>',
         
         'btn_services': '📂 Хизматрасонӣ',
         'btn_profile': '👤 Профил',
@@ -486,6 +526,24 @@ TRANSLATIONS = {
             '  • Танзими системаи мониторинг\n\n'
             '📋 <b>Шартномаи расмӣ пешниҳод мешавад</b>\n'
             '<i>Мо бо нархҳои баланд натарсонем — ҳама чиз ба таври инфиродӣ баррасӣ мешавад</i>'
+        ),
+        
+        'service_package': (
+            '<b>📦 Бастаи «Оғози зуд»</b>\n\n'
+            'Дар бар мегирад: Сайт-визитка + Telegram-бот + Тарҳи канал.\n\n'
+            '💰 <b>Нарх:</b> аз 700 сомонӣ'
+        ),
+        
+        'service_ai': (
+            '<b>🤖 AI-Автоматизатсия</b>\n\n'
+            'Ёвари ҳушманд, ки дар бораи моли шумо ҳама чизро медонад ва ба мизоҷон 24/7 ҷавоб медиҳад.\n\n'
+            '💰 <b>Нарх:</b> аз 400 сомонӣ'
+        ),
+        
+        'service_tech': (
+            '<b>🛡️ Дастгирии техникӣ</b>\n\n'
+            'Назорат 24/7, навсозии бот, муҳофизат аз ҳамлаҳо.\n\n'
+            '💰 <b>Нарх:</b> 150 сомонӣ / моҳ'
         ),
         
         'profile_text': (
@@ -582,6 +640,7 @@ TRANSLATIONS = {
         
         'choose_language': '🌍 <b>Tilni tanlang / Choose language</b>\n\nKerakli tilni tanlang:',
         'language_set': '✅ Til muvaffaqiyatli o\'rnatildi: <b>O\'zbekcha</b>',
+        'menu_updated': '🔄 <b>Asosiy menyu yangilandi</b>',
         
         'btn_services': '📂 Xizmatlar',
         'btn_profile': '👤 Profil',
@@ -644,6 +703,24 @@ TRANSLATIONS = {
             '  • Monitoring tizimini sozlash\n\n'
             '📋 <b>Rasmiy shartnoma taqdim etiladi</b>\n'
             '<i>Biz yuqori narxlar bilan qo\'rqitmaymiz — hamma narsa individual muhokama qilinadi</i>'
+        ),
+        
+        'service_package': (
+            '<b>📦 "Tez Boshlash" to\'plami</b>\n\n'
+            'Kiradi: Vizitka sayti + Telegram bot + Kanal dizayni.\n\n'
+            '💰 <b>Narx:</b> 700 TJS dan'
+        ),
+        
+        'service_ai': (
+            '<b>🤖 AI Avtomatlash</b>\n\n'
+            'Mahsulotingiz haqida hamma narsani biladigan va mijozlarga 24/7 javob beradigan aqlli yordamchi.\n\n'
+            '💰 <b>Narx:</b> 400 TJS dan'
+        ),
+        
+        'service_tech': (
+            '<b>🛡️ Texnik Qo\'llab-quvvatlash</b>\n\n'
+            '24/7 monitoring, bot yangilanishlari, hujumlar va nosozliklardan himoya.\n\n'
+            '💰 <b>Narx:</b> 150 TJS / oy'
         ),
         
         'profile_text': (

@@ -119,6 +119,15 @@ async def change_user_language(callback: types.CallbackQuery):
         parse_mode="HTML"
     )
     
+    # Импортируем get_main_keyboard и обновляем главное меню
+    from keyboards.reply import get_main_keyboard
+    
+    # Отправляем главное меню с обновленным языком
+    await callback.message.answer(
+        text=get_text(new_lang, 'menu_updated'),
+        reply_markup=get_main_keyboard(new_lang)
+    )
+    
     await callback.answer()
 
 
