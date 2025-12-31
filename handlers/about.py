@@ -1,5 +1,6 @@
 """Обработчик раздела "О компании" с мультиязычной поддержкой"""
 from aiogram import Router, F, types
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from translations import get_text
 import database as db
 
@@ -9,4 +10,31 @@ router = Router()
 async def show_about(message: types.Message):
     user_lang = db.get_user_language(message.from_user.id) or 'ru'
     db.update_last_interaction(message.from_user.id)
-    await message.answer(text=get_text(user_lang, 'about_text'), parse_mode="HTML")
+    
+    # Создаем inline-клавиатуру с социальными ссылками
+    keyboard = InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(
+                    text=get_text(user_lang, 'btn_instagram'),
+                    url="https://instagram.com/merix_codex"
+                ),
+                InlineKeyboardButton(
+                    text=get_text(user_lang, 'btn_website'),
+                    url="https://merix-codex.netlify.app"
+                )
+            ],
+            [
+                InlineKeyboardButton(
+                    text=get_text(user_lang, 'btn_reviews'),
+                    url="https://t.me/otziv_merix_codex"
+                )
+            ]
+        ]
+    )
+    
+    await message.answer(
+        text=get_text(user_lang, 'about_text'),
+        reply_markup=keyboard,
+        parse_mode="HTML"
+    )

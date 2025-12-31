@@ -179,9 +179,11 @@ TRANSLATIONS = {
             '  • Официальные договора\n'
             '  • Индивидуальный подход\n'
             '  • Гибкие цены\n\n'
-            '� <b>Instagram:</b> https://instagram.com/merix_codex\n\n'
-            '�📞 Для консультации используйте <b>«🆘 Помощь»</b>'
+            '📞 Для консультации используйте <b>«🆘 Помощь»</b>'
         ),
+        'btn_instagram': '📸 Instagram',
+        'btn_reviews': '💬 Отзывы',
+        'btn_website': '🌐 Сайт',
         
         # Помощь
         'help_text': (
@@ -379,8 +381,8 @@ TRANSLATIONS = {
             '💼 To order, go to <b>«📂 Services»</b>'
         ),
         
-        'about� <b>Instagram:</b> https://instagram.com/merix_codex\n\n'
-            '�_text': (
+        # About
+        'about_text': (
             'ℹ️ <b>About Merix CodeX</b>\n\n'
             '<b>Merix CodeX</b> — a team of professional IT specialists.\n\n'
             '🎯 <b>Our mission:</b>\n'
@@ -392,6 +394,9 @@ TRANSLATIONS = {
             '  • Flexible pricing\n\n'
             '📞 For consultation use <b>«🆘 Help»</b>'
         ),
+        'btn_instagram': '📸 Instagram',
+        'btn_reviews': '💬 Reviews',
+        'btn_website': '🌐 Website',
         
         'help_text': (
             '🆘 <b>24/7 Support</b>\n\n'
@@ -556,6 +561,7 @@ TRANSLATIONS = {
             '💼 Барои фармоиш ба <b>«📂 Хизматрасонӣ»</b> гузаред'
         ),
         
+        # Дар бораи мо
         'about_text': (
             'ℹ️ <b>Дар бораи Merix CodeX</b>\n\n'
             '<b>Merix CodeX</b> — дастаи мутахассисони касбии IT.\n\n'
@@ -566,9 +572,11 @@ TRANSLATIONS = {
             '  • Шартномаҳои расмӣ\n'
             '  • Равиши инфиродӣ\n'
             '  • Нархҳои чандир\n\n'
-            '� <b>Instagram:</b> https://instagram.com/merix_codex\n\n'
-            '�📞 Барои маслиҳат аз <b>«🆘 Кӯмак»</b> истифода баред'
+            '📞 Барои маслиҳат аз <b>«🆘 Кӯмак»</b> истифода баред'
         ),
+        'btn_instagram': '📸 Instagram',
+        'btn_reviews': '💬 Тафсирҳо',
+        'btn_website': '🌐 Вебсайт',
         
         'help_text': (
             '🆘 <b>Дастгирии 24/7</b>\n\n'
@@ -733,6 +741,7 @@ TRANSLATIONS = {
             '💼 Buyurtma berish uchun <b>«📂 Xizmatlar»</b>ga o\'ting'
         ),
         
+        # Biz haqimizda
         'about_text': (
             'ℹ️ <b>Merix CodeX haqida</b>\n\n'
             '<b>Merix CodeX</b> — professional IT mutaxassislari jamoasi.\n\n'
@@ -743,9 +752,11 @@ TRANSLATIONS = {
             '  • Rasmiy shartnomalar\n'
             '  • Individual yondashuv\n'
             '  • Moslashuvchan narxlar\n\n'
-            '� <b>Instagram:</b> https://instagram.com/merix_codex\n\n'
-            '�📞 Konsultatsiya uchun <b>«🆘 Yordam»</b>dan foydalaning'
+            '📞 Konsultatsiya uchun <b>«🆘 Yordam»</b>dan foydalaning'
         ),
+        'btn_instagram': '📸 Instagram',
+        'btn_reviews': '💬 Sharhlar',
+        'btn_website': '🌐 Veb-sayt',
         
         'help_text': (
             '🆘 <b>24/7 Qo\'llab-quvvatlash</b>\n\n'
