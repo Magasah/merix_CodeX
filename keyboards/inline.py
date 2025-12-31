@@ -12,9 +12,9 @@ def get_services_keyboard(lang: str = 'ru') -> InlineKeyboardMarkup:
             [InlineKeyboardButton(text=get_text(lang, 'btn_bots'), callback_data="service_bots")],
             [InlineKeyboardButton(text=get_text(lang, 'btn_websites'), callback_data="service_websites")],
             [InlineKeyboardButton(text=get_text(lang, 'btn_security'), callback_data="service_security")],
-            [InlineKeyboardButton(text=get_text(lang, 'btn_fast_start'), callback_data="service_fast_start")],
-            [InlineKeyboardButton(text=get_text(lang, 'btn_ai_automation'), callback_data="service_ai_automation")],
-            [InlineKeyboardButton(text=get_text(lang, 'btn_tech_support'), callback_data="service_tech_support")]
+            [InlineKeyboardButton(text=get_text(lang, 'btn_fast_start'), callback_data="service_package")],
+            [InlineKeyboardButton(text=get_text(lang, 'btn_ai_automation'), callback_data="service_ai")],
+            [InlineKeyboardButton(text=get_text(lang, 'btn_tech_support'), callback_data="service_tech")]
         ]
     )
     return keyboard
