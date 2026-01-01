@@ -41,8 +41,13 @@ chmod +x start_bot.sh
 
 #### ✅ Вариант В: Автоперезапуск через cron (скопируйте всё)
 ```bash
-(crontab -l 2>/dev/null; echo "0 */4 * * * cd /home/$USER/merix_CodeX && /usr/bin/python3 main.py >> bot.log 2>&1") | crontab -
+(crontab -l 2>/dev/null; echo "0 */4 * * * cd /home/\$USER/merix_CodeX && /usr/bin/python3 main.py >> bot.log 2>&1") | crontab -
 echo "✅ Cron настроен! Бот будет перезапускаться каждые 4 часа"
+```
+
+**⚠️ ВАЖНО:** Если видите ошибку `python3/home/...`, используйте эту команду:
+```bash
+(crontab -l 2>/dev/null; echo "0 */4 * * * cd ~/merix_CodeX && nohup python3 main.py >> bot.log 2>&1 &") | crontab -
 ```
 
 ---

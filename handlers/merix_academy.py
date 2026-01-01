@@ -42,19 +42,7 @@ async def show_merix_academy(callback: types.CallbackQuery):
     )
     
     try:
-        # Пытаемся отредактировать сообщение с фото
-        media = InputMediaPhoto(
-            media=ACADEMY_PHOTO_URL,
-            caption=description,
-            parse_mode="HTML"
-        )
-        await callback.message.edit_media(
-            media=media,
-            reply_markup=get_subscription_plans_keyboard()
-        )
-    except Exception as e:
-        # Если редактирование не удалось (например, нет фото), отправляем новое сообщение
-        logger.warning(f"Не удалось отредактировать сообщение: {e}")
+        # Удаляем старое сообщение и отправляем новое с фото
         await callback.message.delete()
         await callback.message.answer_photo(
             photo=ACADEMY_PHOTO_URL,
@@ -62,6 +50,22 @@ async def show_merix_academy(callback: types.CallbackQuery):
             reply_markup=get_subscription_plans_keyboard(),
             parse_mode="HTML"
         )
+    except Exception as e:
+        # Если не удалось отправить фото, отправляем просто текст
+        logger.warning(f"Не удалось отправить фото: {e}")
+        try:
+            await callback.message.edit_text(
+                text=description,
+                reply_markup=get_subscription_plans_keyboard(),
+                parse_mode="HTML"
+            )
+        except Exception as e2:
+            logger.error(f"Ошибка при редактировании текста: {e2}")
+            await callback.message.answer(
+                text=description,
+                reply_markup=get_subscription_plans_keyboard(),
+                parse_mode="HTML"
+            )
     
     await callback.answer()
 

@@ -5,19 +5,43 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from translations import get_text
 
 
-def get_services_keyboard(lang: str = 'ru') -> InlineKeyboardMarkup:
-    """Создает клавиатуру выбора категории услуг"""
-    keyboard = InlineKeyboardMarkup(
-        inline_keyboard=[
-            [InlineKeyboardButton(text=get_text(lang, 'btn_bots'), callback_data="service_bots")],
-            [InlineKeyboardButton(text=get_text(lang, 'btn_websites'), callback_data="service_websites")],
-            [InlineKeyboardButton(text=get_text(lang, 'btn_security'), callback_data="service_security")],
-            [InlineKeyboardButton(text=get_text(lang, 'btn_fast_start'), callback_data="service_package")],
-            [InlineKeyboardButton(text=get_text(lang, 'btn_ai_automation'), callback_data="service_ai")],
-            [InlineKeyboardButton(text=get_text(lang, 'btn_tech_support'), callback_data="service_tech")],
-            [InlineKeyboardButton(text="🎓 Merix Academy", callback_data="merix_academy")]
-        ]
-    )
+def get_services_keyboard(lang: str = 'ru', page: int = 1) -> InlineKeyboardMarkup:
+    """Создает клавиатуру выбора категории услуг с пагинацией"""
+    
+    # Все услуги
+    all_services = [
+        InlineKeyboardButton(text=get_text(lang, 'btn_bots'), callback_data="service_bots"),
+        InlineKeyboardButton(text=get_text(lang, 'btn_websites'), callback_data="service_websites"),
+        InlineKeyboardButton(text=get_text(lang, 'btn_security'), callback_data="service_security"),
+        InlineKeyboardButton(text=get_text(lang, 'btn_fast_start'), callback_data="service_package"),
+        InlineKeyboardButton(text=get_text(lang, 'btn_ai_automation'), callback_data="service_ai"),
+        InlineKeyboardButton(text=get_text(lang, 'btn_tech_support'), callback_data="service_tech"),
+        InlineKeyboardButton(text="🎓 Merix Academy", callback_data="merix_academy")
+    ]
+    
+    # Разбиваем на страницы по 4 кнопки
+    items_per_page = 4
+    total_pages = (len(all_services) + items_per_page - 1) // items_per_page
+    
+    # Определяем диапазон для текущей страницы
+    start_idx = (page - 1) * items_per_page
+    end_idx = start_idx + items_per_page
+    current_services = all_services[start_idx:end_idx]
+    
+    # Создаем клавиатуру
+    keyboard_buttons = [[btn] for btn in current_services]
+    
+    # Добавляем навигацию если больше одной страницы
+    if total_pages > 1:
+        nav_buttons = []
+        if page > 1:
+            nav_buttons.append(InlineKeyboardButton(text="◀️ Назад", callback_data=f"services_page_{page-1}"))
+        nav_buttons.append(InlineKeyboardButton(text=f"📄 {page}/{total_pages}", callback_data="services_page_info"))
+        if page < total_pages:
+            nav_buttons.append(InlineKeyboardButton(text="▶️ Далее", callback_data=f"services_page_{page+1}"))
+        keyboard_buttons.append(nav_buttons)
+    
+    keyboard = InlineKeyboardMarkup(inline_keyboard=keyboard_buttons)
     return keyboard
 
 

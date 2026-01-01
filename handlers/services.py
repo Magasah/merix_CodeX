@@ -11,13 +11,32 @@ async def show_services(message: types.Message):
     user_lang = db.get_user_language(message.from_user.id) or 'ru'
     db.update_last_interaction(message.from_user.id)
     await message.answer(text=get_text(user_lang, 'services_title'),
-                        reply_markup=get_services_keyboard(user_lang), parse_mode="HTML")
+                        reply_markup=get_services_keyboard(user_lang, page=1), parse_mode="HTML")
 
 @router.callback_query(F.data == "back_to_services")
 async def back_to_services(callback: types.CallbackQuery):
     user_lang = db.get_user_language(callback.from_user.id) or 'ru'
     await callback.message.edit_text(text=get_text(user_lang, 'services_title'),
-                                     reply_markup=get_services_keyboard(user_lang), parse_mode="HTML")
+                                     reply_markup=get_services_keyboard(user_lang, page=1), parse_mode="HTML")
+    await callback.answer()
+
+@router.callback_query(F.data.startswith("services_page_"))
+async def services_pagination(callback: types.CallbackQuery):
+    """Обрабатывает переключение страниц меню услуг"""
+    user_lang = db.get_user_language(callback.from_user.id) or 'ru'
+    
+    # Извлекаем номер страницы
+    if callback.data == "services_page_info":
+        await callback.answer()
+        return
+    
+    page = int(callback.data.split("_")[-1])
+    
+    await callback.message.edit_text(
+        text=get_text(user_lang, 'services_title'),
+        reply_markup=get_services_keyboard(user_lang, page=page),
+        parse_mode="HTML"
+    )
     await callback.answer()
 
 @router.callback_query(F.data.startswith("service_"))
