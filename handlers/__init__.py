@@ -9,12 +9,14 @@ from .about import router as about_router
 from .help import router as help_router
 from .order import router as order_router
 from .admin import router as admin_router
+from .merix_academy import router as academy_router
 
 # Список всех роутеров для регистрации в главном файле
 routers = [
     start_router,
     subscription_router,
     admin_router,
+    academy_router,  # Роутер для Merix Academy (должен быть перед services)
     services_router,
     profile_router,
     about_router,

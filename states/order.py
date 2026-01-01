@@ -27,3 +27,10 @@ class ReviewStates(StatesGroup):
     # Состояние: ожидание текста отзыва
     waiting_for_review = State()
 
+
+class SubscriptionStates(StatesGroup):
+    """Состояния для процесса оплаты подписки"""
+    
+    # Состояние: ожидание скриншота оплаты по карте
+    waiting_for_receipt = State()
+

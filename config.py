@@ -38,3 +38,10 @@ if not CHANNEL_URL:
 
 # Прокси для обхода блокировок (опционально)
 PROXY_URL = os.getenv("PROXY_URL", None)
+
+# ID приватного канала для платных подписок (Merix Academy)
+PRIVATE_CHANNEL_ID = -1003543534808
+
+# Реквизиты для оплаты картой
+PAYMENT_CARD_ALIF = "+992888788181"
+PAYMENT_CARD_MASTERCARD = "5413525250170749"
