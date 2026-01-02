@@ -106,20 +106,13 @@ async def main():
 
 
 if __name__ == "__main__":
-    try:
-        asyncio.run(main())
-    except (KeyboardInterrupt, SystemExit):
-        logger.info("✅ Бот успешно завершил работу")
-
-
-if __name__ == "__main__":
     """
     Точка входа в приложение
     Запускает асинхронную главную функцию
     """
     try:
         asyncio.run(main())
-    except KeyboardInterrupt:
-        logger.info("⛔ Бот остановлен пользователем")
+    except (KeyboardInterrupt, SystemExit):
+        logger.info("✅ Бот успешно завершил работу")
     except Exception as e:
         logger.error(f"❌ Критическая ошибка: {e}")
