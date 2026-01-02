@@ -1,5 +1,6 @@
 """Обработчики раздела "Услуги" с мультиязычной поддержкой"""
 from aiogram import Router, F, types
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from keyboards.inline import get_services_keyboard, get_service_detail_keyboard
 from translations import get_text
 import database as db
@@ -43,6 +44,36 @@ async def services_pagination(callback: types.CallbackQuery):
 async def show_service_detail(callback: types.CallbackQuery):
     user_lang = db.get_user_language(callback.from_user.id) or 'ru'
     service_type = callback.data.split("_")[1]
-    await callback.message.edit_text(text=get_text(user_lang, f'service_{service_type}'),
-                                     reply_markup=get_service_detail_keyboard(service_type, user_lang), parse_mode="HTML")
+    
+    # Специальная обработка для service_scripts
+    if service_type == "scripts":
+        scripts_text = (
+            "💻 <b>Разработка Скриптов и Софта</b>\n\n"
+            "Мы пишем код под любые задачи:\n\n"
+            "🎮 <b>GameDev:</b> Читы, боты для фарма, макросы (Roblox, Minecraft, Mobile).\n"
+            "🕵️‍♂️ <b>Pentest & OSINT:</b> Парсеры, чеккеры, софт для тестов безопасности.\n"
+            "🤖 <b>Automation:</b> Автоматизация рутины.\n\n"
+            "💰 <b>Цена:</b> от 150 TJS (зависит от сложности).\n\n"
+            "Для заказа нажмите кнопку ниже."
+        )
+        
+        keyboard = InlineKeyboardMarkup(
+            inline_keyboard=[
+                [InlineKeyboardButton(text="👨‍💻 Обсудить заказ", url="https://t.me/noxsec")],
+                [InlineKeyboardButton(text=get_text(user_lang, 'btn_back'), callback_data="back_to_services")]
+            ]
+        )
+        
+        await callback.message.edit_text(
+            text=scripts_text,
+            reply_markup=keyboard,
+            parse_mode="HTML"
+        )
+    else:
+        await callback.message.edit_text(
+            text=get_text(user_lang, f'service_{service_type}'),
+            reply_markup=get_service_detail_keyboard(service_type, user_lang),
+            parse_mode="HTML"
+        )
+    
     await callback.answer()
