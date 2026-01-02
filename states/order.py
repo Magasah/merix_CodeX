@@ -34,3 +34,13 @@ class SubscriptionStates(StatesGroup):
     # Состояние: ожидание скриншота оплаты по карте
     waiting_for_receipt = State()
 
+
+class AdminReplyStates(StatesGroup):
+    """Состояния для отправки сообщения пользователю по ID"""
+    
+    # Состояние: ожидание ID пользователя
+    waiting_for_user_id = State()
+    
+    # Состояние: ожидание текста сообщения
+    waiting_for_message = State()
+

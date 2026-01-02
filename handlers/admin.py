@@ -7,11 +7,12 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from translations import get_text
 from keyboards.inline import get_admin_keyboard, get_order_management_keyboard
-from states.order import BroadcastStates
+from states.order import BroadcastStates, AdminReplyStates
 import database as db
 import config
 import asyncio
 import logging
+from datetime import datetime
 
 logger = logging.getLogger(__name__)
 
@@ -38,21 +39,28 @@ async def admin_panel(message: types.Message):
 
 @router.callback_query(F.data == "admin_stats")
 async def show_statistics(callback: types.CallbackQuery):
-    """Показывает статистику"""
+    """Показывает статистику (ИСПРАВЛЕННАЯ ВЕРСИЯ)"""
     if callback.from_user.id != config.ADMIN_ID:
         await callback.answer("❌ Доступ запрещен", show_alert=True)
         return
     
     user_lang = db.get_user_language(callback.from_user.id) or 'ru'
     
+    # Получаем статистику из базы данных
     total_users = db.get_users_count()
-    today_users = db.get_users_count_today()
+    vip_users = db.get_vip_users_count()
+    current_date = datetime.now().strftime("%d.%m.%Y")
     
-    stats_text = get_text(user_lang, 'statistics_text', total=total_users, today=today_users)
+    stats_text = (
+        f"📊 <b>Статистика Бота:</b>\n\n"
+        f"👥 Всего юзеров: {total_users}\n"
+        f"💎 VIP подписчиков: {vip_users}\n"
+        f"📅 Дата: {current_date}"
+    )
     
-    await callback.message.edit_text(
+    # Отправляем НОВОЕ сообщение (не редактируем)
+    await callback.message.answer(
         text=stats_text,
-        reply_markup=get_admin_keyboard(user_lang),
         parse_mode="HTML"
     )
     await callback.answer()
@@ -285,5 +293,109 @@ async def process_broadcast(message: types.Message, state: FSMContext):
     )
     
     logger.info(f"📢 Рассылка завершена: успешно={success}, ошибок={failed}")
+    
+    await state.clear()
+
+
+# ============= НОВАЯ ФУНКЦИЯ: НАПИСАТЬ ПО ID =============
+
+@router.callback_query(F.data == "admin_reply_id")
+async def admin_reply_by_id_start(callback: types.CallbackQuery, state: FSMContext):
+    """Начинает процесс отправки сообщения по ID"""
+    if callback.from_user.id != config.ADMIN_ID:
+        await callback.answer("❌ Доступ запрещен", show_alert=True)
+        return
+    
+    await callback.message.answer(
+        text="✉️ <b>Отправка сообщения по ID</b>\n\nВведите ID пользователя:",
+        parse_mode="HTML"
+    )
+    
+    await state.set_state(AdminReplyStates.waiting_for_user_id)
+    await callback.answer()
+
+
+@router.message(AdminReplyStates.waiting_for_user_id)
+async def admin_reply_receive_id(message: types.Message, state: FSMContext):
+    """Получает ID пользователя"""
+    if message.from_user.id != config.ADMIN_ID:
+        await state.clear()
+        return
+    
+    # Проверяем что введены только цифры
+    if not message.text.isdigit():
+        await message.answer(
+            text="❌ <b>Ошибка!</b>\n\nID должен состоять только из цифр.\nПопробуйте снова:",
+            parse_mode="HTML"
+        )
+        return
+    
+    user_id = int(message.text)
+    
+    # Проверяем существует ли пользователь
+    if not db.user_exists(user_id):
+        await message.answer(
+            text=f"❌ <b>Ошибка!</b>\n\nПользователь с ID <code>{user_id}</code> не найден в базе.\nВведите другой ID:",
+            parse_mode="HTML"
+        )
+        return
+    
+    # Сохраняем ID в состояние
+    await state.update_data(target_user_id=user_id)
+    
+    await message.answer(
+        text=f"✅ ID получен: <code>{user_id}</code>\n\nТеперь введите текст сообщения:",
+        parse_mode="HTML"
+    )
+    
+    await state.set_state(AdminReplyStates.waiting_for_message)
+
+
+@router.message(AdminReplyStates.waiting_for_message)
+async def admin_reply_send_message(message: types.Message, state: FSMContext):
+    """Отправляет сообщение пользователю"""
+    if message.from_user.id != config.ADMIN_ID:
+        await state.clear()
+        return
+    
+    # Получаем ID из состояния
+    data = await state.get_data()
+    target_user_id = data.get('target_user_id')
+    
+    if not target_user_id:
+        await message.answer("❌ Ошибка: ID не найден. Начните заново с /admin")
+        await state.clear()
+        return
+    
+    # Пытаемся отправить сообщение
+    try:
+        await message.bot.send_message(
+            chat_id=target_user_id,
+            text=message.text,
+            parse_mode="HTML"
+        )
+        
+        await message.answer(
+            text=f"✅ <b>Сообщение доставлено!</b>\n\nПолучатель: <code>{target_user_id}</code>",
+            parse_mode="HTML"
+        )
+        
+        logger.info(f"✉️ Админ отправил сообщение пользователю {target_user_id}")
+        
+    except Exception as e:
+        error_text = str(e)
+        
+        if "bot was blocked by the user" in error_text or "user is deactivated" in error_text:
+            await message.answer(
+                text=f"❌ <b>Ошибка: Бот заблокирован юзером</b>\n\nID: <code>{target_user_id}</code>",
+                parse_mode="HTML"
+            )
+        else:
+            await message.answer(
+                text=f"❌ <b>Ошибка отправки:</b>\n\n<code>{error_text}</code>",
+                parse_mode="HTML"
+            )
+        
+        logger.error(f"❌ Ошибка отправки сообщения пользователю {target_user_id}: {e}")
     
     await state.clear()

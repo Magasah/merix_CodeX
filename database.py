@@ -273,6 +273,57 @@ def get_users_count_today() -> int:
         return 0
 
 
+def get_users_count() -> int:
+    """
+    Получает общее количество пользователей
+    
+    Returns:
+        int: Общее количество пользователей
+    """
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+        
+        cursor.execute('SELECT COUNT(*) FROM users')
+        count = cursor.fetchone()[0]
+        
+        conn.close()
+        return count
+        
+    except Exception as e:
+        logger.error(f"❌ Ошибка получения общего количества пользователей: {e}")
+        return 0
+
+
+def get_vip_users_count() -> int:
+    """
+    Получает количество VIP пользователей
+    
+    Returns:
+        int: Количество VIP пользователей
+    """
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+        
+        # Проверяем существует ли колонка is_vip
+        cursor.execute("PRAGMA table_info(users)")
+        columns = [column[1] for column in cursor.fetchall()]
+        
+        if 'is_vip' in columns:
+            cursor.execute('SELECT COUNT(*) FROM users WHERE is_vip = 1')
+            count = cursor.fetchone()[0]
+        else:
+            count = 0
+        
+        conn.close()
+        return count
+        
+    except Exception as e:
+        logger.error(f"❌ Ошибка получения количества VIP пользователей: {e}")
+        return 0
+
+
 def get_user_info(user_id: int) -> Optional[dict]:
     """
     Получает полную информацию о пользователе

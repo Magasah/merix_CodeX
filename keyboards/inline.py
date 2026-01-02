@@ -16,6 +16,7 @@ def get_services_keyboard(lang: str = 'ru', page: int = 1) -> InlineKeyboardMark
         InlineKeyboardButton(text=get_text(lang, 'btn_fast_start'), callback_data="service_package"),
         InlineKeyboardButton(text=get_text(lang, 'btn_ai_automation'), callback_data="service_ai"),
         InlineKeyboardButton(text=get_text(lang, 'btn_tech_support'), callback_data="service_tech"),
+        InlineKeyboardButton(text="💻 Скрипты (Игры/Софт)", callback_data="service_scripts"),
         InlineKeyboardButton(text="🎓 Merix Academy", callback_data="merix_academy")
     ]
     
@@ -75,7 +76,8 @@ def get_admin_keyboard(lang: str = 'ru') -> InlineKeyboardMarkup:
         inline_keyboard=[
             [InlineKeyboardButton(text=get_text(lang, 'btn_statistics'), callback_data="admin_stats")],
             [InlineKeyboardButton(text=get_text(lang, 'btn_active_orders'), callback_data="admin_orders")],
-            [InlineKeyboardButton(text=get_text(lang, 'btn_broadcast'), callback_data="admin_broadcast")]
+            [InlineKeyboardButton(text=get_text(lang, 'btn_broadcast'), callback_data="admin_broadcast")],
+            [InlineKeyboardButton(text="✉️ Написать по ID", callback_data="admin_reply_id")]
         ]
     )
     return keyboard
