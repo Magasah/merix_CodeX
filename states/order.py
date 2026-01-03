@@ -51,3 +51,16 @@ class PaymentStates(StatesGroup):
     # Состояние: ожидание суммы пополнения
     waiting_for_amount = State()
 
+
+class InvoiceStates(StatesGroup):
+    """Состояния для процесса выставления счёта администратором/менеджером"""
+    
+    # Состояние: ожидание ID пользователя
+    waiting_for_user_id = State()
+    
+    # Состояние: ожидание суммы
+    waiting_for_amount = State()
+    
+    # Состояние: ожидание описания услуги
+    waiting_for_description = State()
+

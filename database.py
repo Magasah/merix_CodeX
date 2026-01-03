@@ -56,6 +56,11 @@ def init_db():
             cursor.execute('ALTER TABLE users ADD COLUMN balance INTEGER DEFAULT 0')
             logger.info("✅ Добавлена колонка balance в таблицу users")
         
+        # Миграция: Добавляем колонку role для RBAC
+        if 'role' not in columns:
+            cursor.execute('ALTER TABLE users ADD COLUMN role TEXT DEFAULT "user"')
+            logger.info("✅ Добавлена колонка role в таблицу users")
+        
         conn.commit()
         conn.close()
         logger.info("✅ База данных успешно инициализирована")
@@ -637,3 +642,91 @@ def set_user_balance(user_id: int, balance: int) -> bool:
     except Exception as e:
         logger.error(f"❌ Ошибка установки баланса: {e}")
         return False
+
+
+# ============= RBAC: УПРАВЛЕНИЕ РОЛЯМИ =============
+
+def get_user_role(user_id: int) -> str:
+    """
+    Получает роль пользователя
+    
+    Args:
+        user_id: Telegram ID пользователя
+        
+    Returns:
+        str: Роль пользователя ('user', 'manager', 'admin')
+    """
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+        
+        cursor.execute('SELECT role FROM users WHERE user_id = ?', (user_id,))
+        result = cursor.fetchone()
+        
+        conn.close()
+        return result[0] if result else 'user'
+        
+    except Exception as e:
+        logger.error(f"❌ Ошибка получения роли: {e}")
+        return 'user'
+
+
+def set_user_role(user_id: int, role: str) -> bool:
+    """
+    Устанавливает роль пользователя
+    
+    Args:
+        user_id: Telegram ID пользователя
+        role: Новая роль ('user', 'manager', 'admin')
+        
+    Returns:
+        bool: True если успешно установлено
+    """
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+        
+        cursor.execute('''
+            UPDATE users 
+            SET role = ?
+            WHERE user_id = ?
+        ''', (role, user_id))
+        
+        conn.commit()
+        conn.close()
+        
+        logger.info(f"👤 Роль пользователя {user_id} изменена на: {role}")
+        return True
+        
+    except Exception as e:
+        logger.error(f"❌ Ошибка установки роли: {e}")
+        return False
+
+
+def has_permission(user_id: int, required_role: str) -> bool:
+    """
+    Проверяет имеет ли пользователь необходимый уровень доступа
+    
+    Иерархия: user < manager < admin
+    
+    Args:
+        user_id: Telegram ID пользователя
+        required_role: Требуемая роль ('user', 'manager', 'admin')
+        
+    Returns:
+        bool: True если доступ разрешён
+    """
+    import config
+    
+    # ADMIN_ID всегда имеет admin права
+    if user_id == config.ADMIN_ID:
+        return True
+    
+    user_role = get_user_role(user_id)
+    
+    roles_hierarchy = {'user': 0, 'manager': 1, 'admin': 2}
+    
+    user_level = roles_hierarchy.get(user_role, 0)
+    required_level = roles_hierarchy.get(required_role, 0)
+    
+    return user_level >= required_level

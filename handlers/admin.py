@@ -40,8 +40,12 @@ async def admin_panel(message: types.Message):
 @router.callback_query(F.data == "admin_stats")
 async def show_statistics(callback: types.CallbackQuery):
     """Показывает статистику (ИСПРАВЛЕННАЯ ВЕРСИЯ)"""
-    if callback.from_user.id != config.ADMIN_ID:
-        await callback.answer("❌ Доступ запрещен", show_alert=True)
+    user_id = callback.from_user.id
+    
+    # SECURITY: Проверка прав доступа (только admin)
+    if not db.has_permission(user_id, 'admin'):
+        await callback.answer("⛔ Доступ запрещён", show_alert=True)
+        logger.warning(f"⚠️ Попытка неавторизованного доступа к статистике: user_id={user_id}")
         return
     
     user_lang = db.get_user_language(callback.from_user.id) or 'ru'
@@ -69,8 +73,12 @@ async def show_statistics(callback: types.CallbackQuery):
 @router.callback_query(F.data == "admin_orders")
 async def show_active_orders(callback: types.CallbackQuery):
     """Показывает список активных заказов"""
-    if callback.from_user.id != config.ADMIN_ID:
-        await callback.answer("❌ Доступ запрещен", show_alert=True)
+    user_id = callback.from_user.id
+    
+    # SECURITY: Проверка прав доступа (только admin)
+    if not db.has_permission(user_id, 'admin'):
+        await callback.answer("⛔ Доступ запрещён", show_alert=True)
+        logger.warning(f"⚠️ Попытка неавторизованного доступа к заказам: user_id={user_id}")
         return
     
     user_lang = db.get_user_language(callback.from_user.id) or 'ru'
@@ -111,8 +119,12 @@ async def show_active_orders(callback: types.CallbackQuery):
 @router.callback_query(F.data.startswith("order_view_"))
 async def view_order_details(callback: types.CallbackQuery):
     """Показывает детали заказа"""
-    if callback.from_user.id != config.ADMIN_ID:
-        await callback.answer("❌ Доступ запрещен", show_alert=True)
+    user_id = callback.from_user.id
+    
+    # SECURITY: Проверка прав доступа (только admin)
+    if not db.has_permission(user_id, 'admin'):
+        await callback.answer("⛔ Доступ запрещён", show_alert=True)
+        logger.warning(f"⚠️ Попытка неавторизованного доступа к заказу: user_id={user_id}")
         return
     
     order_id = int(callback.data.split("_")[2])
@@ -160,8 +172,12 @@ async def view_order_details(callback: types.CallbackQuery):
 @router.callback_query(F.data.startswith("order_status_"))
 async def update_order_status_handler(callback: types.CallbackQuery):
     """Обновляет статус заказа и уведомляет пользователя"""
-    if callback.from_user.id != config.ADMIN_ID:
-        await callback.answer("❌ Доступ запрещен", show_alert=True)
+    user_id = callback.from_user.id
+    
+    # SECURITY: Проверка прав доступа (только admin)
+    if not db.has_permission(user_id, 'admin'):
+        await callback.answer("⛔ Доступ запрещён", show_alert=True)
+        logger.warning(f"⚠️ Попытка изменения статуса заказа: user_id={user_id}")
         return
     
     parts = callback.data.split("_")
@@ -217,8 +233,11 @@ async def update_order_status_handler(callback: types.CallbackQuery):
 @router.callback_query(F.data == "back_to_admin")
 async def back_to_admin(callback: types.CallbackQuery):
     """Возврат в админ-панель"""
-    if callback.from_user.id != config.ADMIN_ID:
-        await callback.answer("❌ Доступ запрещен", show_alert=True)
+    user_id = callback.from_user.id
+    
+    # SECURITY: Проверка прав доступа (только admin)
+    if not db.has_permission(user_id, 'admin'):
+        await callback.answer("⛔ Доступ запрещён", show_alert=True)
         return
     
     user_lang = db.get_user_language(callback.from_user.id) or 'ru'
@@ -234,8 +253,12 @@ async def back_to_admin(callback: types.CallbackQuery):
 @router.callback_query(F.data == "admin_broadcast")
 async def start_broadcast(callback: types.CallbackQuery, state: FSMContext):
     """Начинает рассылку"""
-    if callback.from_user.id != config.ADMIN_ID:
-        await callback.answer("❌ Доступ запрещен", show_alert=True)
+    user_id = callback.from_user.id
+    
+    # SECURITY: Проверка прав доступа (только admin)
+    if not db.has_permission(user_id, 'admin'):
+        await callback.answer("⛔ Доступ запрещён", show_alert=True)
+        logger.warning(f"⚠️ Попытка запуска рассылки: user_id={user_id}")
         return
     
     user_lang = db.get_user_language(callback.from_user.id) or 'ru'
