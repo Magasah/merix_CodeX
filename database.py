@@ -48,6 +48,14 @@ def init_db():
             )
         ''')
         
+        # Миграция: Добавляем колонку balance если её нет
+        cursor.execute("PRAGMA table_info(users)")
+        columns = [column[1] for column in cursor.fetchall()]
+        
+        if 'balance' not in columns:
+            cursor.execute('ALTER TABLE users ADD COLUMN balance INTEGER DEFAULT 0')
+            logger.info("✅ Добавлена колонка balance в таблицу users")
+        
         conn.commit()
         conn.close()
         logger.info("✅ База данных успешно инициализирована")
@@ -538,3 +546,94 @@ def get_order_by_id(order_id: int) -> Optional[Tuple]:
     except Exception as e:
         logger.error(f"❌ Ошибка получения заказа: {e}")
         return None
+
+
+# ============= ФУНКЦИИ ДЛЯ РАБОТЫ С БАЛАНСОМ =============
+
+def get_user_balance(user_id: int) -> int:
+    """
+    Получает баланс пользователя
+    
+    Args:
+        user_id: Telegram ID пользователя
+        
+    Returns:
+        int: Баланс пользователя в рублях
+    """
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+        
+        cursor.execute('SELECT balance FROM users WHERE user_id = ?', (user_id,))
+        result = cursor.fetchone()
+        
+        conn.close()
+        return result[0] if result else 0
+        
+    except Exception as e:
+        logger.error(f"❌ Ошибка получения баланса: {e}")
+        return 0
+
+
+def update_user_balance(user_id: int, amount: int) -> bool:
+    """
+    Обновляет баланс пользователя (добавляет сумму)
+    
+    Args:
+        user_id: Telegram ID пользователя
+        amount: Сумма для добавления (может быть отрицательной)
+        
+    Returns:
+        bool: True если успешно обновлено
+    """
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+        
+        cursor.execute('''
+            UPDATE users 
+            SET balance = balance + ?
+            WHERE user_id = ?
+        ''', (amount, user_id))
+        
+        conn.commit()
+        conn.close()
+        
+        logger.info(f"💰 Баланс пользователя {user_id} изменён на {amount} RUB")
+        return True
+        
+    except Exception as e:
+        logger.error(f"❌ Ошибка обновления баланса: {e}")
+        return False
+
+
+def set_user_balance(user_id: int, balance: int) -> bool:
+    """
+    Устанавливает баланс пользователя (заменяет текущий)
+    
+    Args:
+        user_id: Telegram ID пользователя
+        balance: Новый баланс
+        
+    Returns:
+        bool: True если успешно установлено
+    """
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+        
+        cursor.execute('''
+            UPDATE users 
+            SET balance = ?
+            WHERE user_id = ?
+        ''', (balance, user_id))
+        
+        conn.commit()
+        conn.close()
+        
+        logger.info(f"💰 Баланс пользователя {user_id} установлен: {balance} RUB")
+        return True
+        
+    except Exception as e:
+        logger.error(f"❌ Ошибка установки баланса: {e}")
+        return False

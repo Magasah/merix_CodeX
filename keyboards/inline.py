@@ -87,6 +87,7 @@ def get_profile_keyboard(lang: str = 'ru') -> InlineKeyboardMarkup:
     """Создает клавиатуру профиля"""
     keyboard = InlineKeyboardMarkup(
         inline_keyboard=[
+            [InlineKeyboardButton(text="💳 Пополнить баланс", callback_data="topup_balance")],
             [InlineKeyboardButton(text=get_text(lang, 'btn_settings'), callback_data="profile_settings")],
             [InlineKeyboardButton(text=get_text(lang, 'btn_my_orders'), callback_data="profile_orders")]
         ]

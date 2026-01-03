@@ -10,12 +10,14 @@ from .help import router as help_router
 from .order import router as order_router
 from .admin import router as admin_router
 from .merix_academy import router as academy_router
+from .payment import router as payment_router
 
 # Список всех роутеров для регистрации в главном файле
 routers = [
     start_router,
     subscription_router,
     admin_router,
+    payment_router,  # Роутер для YooMoney платежей
     academy_router,  # Роутер для Merix Academy (должен быть перед services)
     services_router,
     profile_router,

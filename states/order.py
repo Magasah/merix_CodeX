@@ -44,3 +44,10 @@ class AdminReplyStates(StatesGroup):
     # Состояние: ожидание текста сообщения
     waiting_for_message = State()
 
+
+class PaymentStates(StatesGroup):
+    """Состояния для процесса пополнения баланса YooMoney"""
+    
+    # Состояние: ожидание суммы пополнения
+    waiting_for_amount = State()
+
