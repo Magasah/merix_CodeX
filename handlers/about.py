@@ -20,6 +20,16 @@ async def show_about(message: types.Message):
                     url="https://instagram.com/merix_codex"
                 ),
                 InlineKeyboardButton(
+                    text=get_text(user_lang, 'btn_tiktok'),
+                    url="https://www.tiktok.com/@merix_codex?_r=1&_t=ZS-92oyYowf7kv"
+                )
+            ],
+            [
+                InlineKeyboardButton(
+                    text=get_text(user_lang, 'btn_youtube'),
+                    url="https://youtube.com/@merix_codex?si=Zy1RvaVFDOSp5fvZ"
+                ),
+                InlineKeyboardButton(
                     text=get_text(user_lang, 'btn_website'),
                     url="https://merix-codex.netlify.app"
                 )

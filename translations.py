@@ -43,7 +43,12 @@ TRANSLATIONS = {
         ),
         
         # Услуги
-        'services_title': '<b>📂 Выберите категорию услуг:</b>\n\nВсе цены обсуждаются индивидуально в зависимости от сложности проекта.',
+        'services_title': (
+            '<b>📂 Выберите категорию услуг:</b>\n\n'
+            '⚠️ <b>Стоимость каждого проекта обсуждается индивидуально.</b>\n'
+            '<b>Оплата: RUB / USD / Crypto.</b>\n'
+            'Для оценки стоимости и ТЗ пишите менеджеру.'
+        ),
         'btn_bots': '🤖 Telegram Боты',
         'btn_websites': '🌐 Веб-сайты',
         'btn_security': '🛡️ Безопасность',
@@ -55,7 +60,7 @@ TRANSLATIONS = {
         
         'service_bots': (
             '<b>🤖 Разработка Telegram ботов</b>\n\n'
-            '💰 <b>Стоимость:</b> от 200 TJS / 1800 RUB\n'
+            '💰 <b>Стоимость:</b> от 1500 RUB / 15 USD\n'
             '<i>Цена зависит от сложности и функционала</i>\n\n'
             '✨ <b>Что входит:</b>\n'
             '  • Разработка с нуля или доработка\n'
@@ -94,7 +99,7 @@ TRANSLATIONS = {
         
         'service_fast_start': (
             '<b>📦 Пакет "Быстрый старт"</b>\n\n'
-            '💰 <b>Стоимость:</b> от 700 TJS\n'
+            '💰 <b>Стоимость:</b> от 5000 RUB / 50 USD\n'
             '<i>Landing + Bot + Дизайн канала</i>\n\n'
             '✨ <b>Что входит:</b>\n'
             '  • Одностраничный лендинг\n'
@@ -109,12 +114,12 @@ TRANSLATIONS = {
         'service_package': (
             '<b>📦 Пакет «Быстрый старт»</b>\n\n'
             'Входит: Сайт-визитка + Telegram-бот + Оформление канала.\n\n'
-            '💰 <b>Цена:</b> от 700 TJS'
+            '💰 <b>Цена:</b> от 5000 RUB / 50 USD'
         ),
         
         'service_ai_automation': (
             '<b>🤖 AI Автоматизация</b>\n\n'
-            '💰 <b>Стоимость:</b> от 400 TJS\n'
+            '💰 <b>Стоимость:</b> от 3000 RUB / 30 USD\n'
             '<i>Кастомный AI-ассистент для бизнеса</i>\n\n'
             '✨ <b>Что входит:</b>\n'
             '  • Интеграция с ChatGPT/Claude\n'
@@ -128,12 +133,12 @@ TRANSLATIONS = {
         'service_ai': (
             '<b>🤖 AI-Автоматизация</b>\n\n'
             'Внедрение умного ассистента, который знает всё о вашем товаре и отвечает клиентам 24/7.\n\n'
-            '💰 <b>Цена:</b> от 400 TJS'
+            '💰 <b>Цена:</b> от 3000 RUB / 30 USD'
         ),
         
         'service_tech_support': (
             '<b>🛡️ Техническая поддержка 24/7</b>\n\n'
-            '💰 <b>Стоимость:</b> 150 TJS/месяц\n'
+            '💰 <b>Стоимость:</b> 1000 RUB / 10 USD в месяц\n'
             '<i>Мониторинг и защита ваших систем</i>\n\n'
             '✨ <b>Что входит:</b>\n'
             '  • Круглосуточный мониторинг\n'
@@ -147,7 +152,7 @@ TRANSLATIONS = {
         'service_tech': (
             '<b>🛡️ Техподдержка</b>\n\n'
             'Мониторинг 24/7, обновление бота, защита от атак и сбоев.\n\n'
-            '💰 <b>Цена:</b> 150 TJS / мес.'
+            '💰 <b>Цена:</b> 1000 RUB / 10 USD / мес.'
         ),
         
         # Профиль
@@ -158,7 +163,7 @@ TRANSLATIONS = {
             '• Имя: {name}\n'
             '• Username: {username}\n'
             '• Язык: 🇷🇺 Русский\n\n'
-            '💰 <b>Баланс:</b> {balance} TJS\n'
+            '💰 <b>Баланс:</b> {balance} RUB\n'
             '📦 <b>Всего заказов:</b> {orders_count}\n\n'
             'Используйте кнопки ниже для управления профилем:'
         ),
@@ -182,6 +187,8 @@ TRANSLATIONS = {
             '📞 Для консультации используйте <b>«🆘 Помощь»</b>'
         ),
         'btn_instagram': '📸 Instagram',
+        'btn_tiktok': '🎵 TikTok',
+        'btn_youtube': '▶️ YouTube',
         'btn_reviews': '💬 Отзывы',
         'btn_website': '🌐 Сайт',
         
@@ -307,7 +314,12 @@ TRANSLATIONS = {
             '📱 Use the menu below for navigation.'
         ),
         
-        'services_title': '<b>📂 Choose a service category:</b>\n\nAll prices are negotiable depending on project complexity.',
+        'services_title': (
+            '<b>📂 Choose a service category:</b>\n\n'
+            '⚠️ <b>The cost of each project is discussed individually.</b>\n'
+            '<b>Payment: RUB / USD / Crypto.</b>\n'
+            'Contact manager for cost estimate and requirements.'
+        ),
         'btn_bots': '🤖 Telegram Bots',
         'btn_websites': '🌐 Websites',
         'btn_security': '🛡️ Security',
@@ -316,7 +328,7 @@ TRANSLATIONS = {
         
         'service_bots': (
             '<b>🤖 Telegram Bot Development</b>\n\n'
-            '💰 <b>Price:</b> from 200 TJS / 1800 RUB\n'
+            '💰 <b>Price:</b> from 1500 RUB / 15 USD\n'
             '<i>Price depends on complexity and features</i>\n\n'
             '✨ <b>Included:</b>\n'
             '  • Development from scratch or improvements\n'
@@ -356,19 +368,19 @@ TRANSLATIONS = {
         'service_package': (
             '<b>📦 "Fast Start" Package</b>\n\n'
             'Includes: Landing page + Telegram bot + Channel design.\n\n'
-            '💰 <b>Price:</b> from 700 TJS'
+            '💰 <b>Price:</b> from 5000 RUB / 50 USD'
         ),
         
         'service_ai': (
             '<b>🤖 AI Automation</b>\n\n'
             'Smart assistant implementation that knows everything about your product and responds to customers 24/7.\n\n'
-            '💰 <b>Price:</b> from 400 TJS'
+            '💰 <b>Price:</b> from 3000 RUB / 30 USD'
         ),
         
         'service_tech': (
             '<b>🛡️ Tech Support</b>\n\n'
             '24/7 monitoring, bot updates, protection from attacks and failures.\n\n'
-            '💰 <b>Price:</b> 150 TJS / month'
+            '💰 <b>Price:</b> 1000 RUB / 10 USD / month'
         ),
         
         'profile_text': (
@@ -395,6 +407,8 @@ TRANSLATIONS = {
             '📞 For consultation use <b>«🆘 Help»</b>'
         ),
         'btn_instagram': '📸 Instagram',
+        'btn_tiktok': '🎵 TikTok',
+        'btn_youtube': '▶️ YouTube',
         'btn_reviews': '💬 Reviews',
         'btn_website': '🌐 Website',
         
@@ -487,7 +501,12 @@ TRANSLATIONS = {
             '📱 Барои навигатсия менюи поёнро истифода баред.'
         ),
         
-        'services_title': '<b>📂 Категорияи хизматро интихоб кунед:</b>\n\nҲамаи нархҳо вобаста ба мураккабии лоиҳа баррасӣ мешаванд.',
+        'services_title': (
+            '<b>📂 Категорияи хизматро интихоб кунед:</b>\n\n'
+            '⚠️ <b>Арзиши ҳар лоиҳа алоҳида баррасӣ мешавад.</b>\n'
+            '<b>Пардохт: RUB / USD / Crypto.</b>\n'
+            'Барои баҳодиҳӣ ба менеҷер нависед.'
+        ),,
         'btn_bots': '🤖 Ботҳои Telegram',
         'btn_websites': '🌐 Сомонаҳо',
         'btn_security': '🛡️ Бехатарӣ',
@@ -496,7 +515,7 @@ TRANSLATIONS = {
         
         'service_bots': (
             '<b>🤖 Таҳияи ботҳои Telegram</b>\n\n'
-            '💰 <b>Нарх:</b> аз 200 сомонӣ / 1800 рубл\n'
+            '💰 <b>Нарх:</b> аз 1500 RUB / 15 USD\n'
             '<i>Нарх вобаста ба мураккабӣ ва функсионал</i>\n\n'
             '✨ <b>Дар бар мегирад:</b>\n'
             '  • Таҳия аз сифр ё такмил\n'
@@ -536,19 +555,19 @@ TRANSLATIONS = {
         'service_package': (
             '<b>📦 Бастаи «Оғози зуд»</b>\n\n'
             'Дар бар мегирад: Сайт-визитка + Telegram-бот + Тарҳи канал.\n\n'
-            '💰 <b>Нарх:</b> аз 700 сомонӣ'
+            '💰 <b>Нарх:</b> аз 5000 RUB / 50 USD'
         ),
         
         'service_ai': (
             '<b>🤖 AI-Автоматизатсия</b>\n\n'
             'Ёвари ҳушманд, ки дар бораи моли шумо ҳама чизро медонад ва ба мизоҷон 24/7 ҷавоб медиҳад.\n\n'
-            '💰 <b>Нарх:</b> аз 400 сомонӣ'
+            '💰 <b>Нарх:</b> аз 3000 RUB / 30 USD'
         ),
         
         'service_tech': (
             '<b>🛡️ Дастгирии техникӣ</b>\n\n'
             'Назорат 24/7, навсозии бот, муҳофизат аз ҳамлаҳо.\n\n'
-            '💰 <b>Нарх:</b> 150 сомонӣ / моҳ'
+            '💰 <b>Нарх:</b> 1000 RUB / 10 USD / моҳ'
         ),
         
         'profile_text': (
@@ -575,6 +594,8 @@ TRANSLATIONS = {
             '📞 Барои маслиҳат аз <b>«🆘 Кӯмак»</b> истифода баред'
         ),
         'btn_instagram': '📸 Instagram',
+        'btn_tiktok': '🎵 TikTok',
+        'btn_youtube': '▶️ YouTube',
         'btn_reviews': '💬 Тафсирҳо',
         'btn_website': '🌐 Вебсайт',
         
@@ -667,7 +688,12 @@ TRANSLATIONS = {
             '📱 Navigatsiya uchun quyidagi menyudan foydalaning.'
         ),
         
-        'services_title': '<b>📂 Xizmat kategoriyasini tanlang:</b>\n\nBarcha narxlar loyiha murakkabligiga qarab muhokama qilinadi.',
+        'services_title': (
+            '<b>📂 Xizmat kategoriyasini tanlang:</b>\n\n'
+            '⚠️ <b>Har bir loyihaning narxi alohida muhokama qilinadi.</b>\n'
+            '<b>To\'lov: RUB / USD / Crypto.</b>\n'
+            'Narx baholash uchun menejer bilan bog\'laning.'
+        ),,
         'btn_bots': '🤖 Telegram Botlar',
         'btn_websites': '🌐 Veb-saytlar',
         'btn_security': '🛡️ Xavfsizlik',
@@ -676,7 +702,7 @@ TRANSLATIONS = {
         
         'service_bots': (
             '<b>🤖 Telegram Bot Ishlab Chiqish</b>\n\n'
-            '💰 <b>Narx:</b> 200 TJS / 1800 RUB dan\n'
+            '💰 <b>Narx:</b> 1500 RUB / 15 USD dan\n'
             '<i>Narx murakkablik va funksionallarga bog\'liq</i>\n\n'
             '✨ <b>Kiritilgan:</b>\n'
             '  • Noldan ishlab chiqish yoki yaxshilash\n'
@@ -716,19 +742,19 @@ TRANSLATIONS = {
         'service_package': (
             '<b>📦 "Tez Boshlash" to\'plami</b>\n\n'
             'Kiradi: Vizitka sayti + Telegram bot + Kanal dizayni.\n\n'
-            '💰 <b>Narx:</b> 700 TJS dan'
+            '💰 <b>Narx:</b> 5000 RUB / 50 USD dan'
         ),
         
         'service_ai': (
             '<b>🤖 AI Avtomatlash</b>\n\n'
             'Mahsulotingiz haqida hamma narsani biladigan va mijozlarga 24/7 javob beradigan aqlli yordamchi.\n\n'
-            '💰 <b>Narx:</b> 400 TJS dan'
+            '💰 <b>Narx:</b> 3000 RUB / 30 USD dan'
         ),
         
         'service_tech': (
             '<b>🛡️ Texnik Qo\'llab-quvvatlash</b>\n\n'
             '24/7 monitoring, bot yangilanishlari, hujumlar va nosozliklardan himoya.\n\n'
-            '💰 <b>Narx:</b> 150 TJS / oy'
+            '💰 <b>Narx:</b> 1000 RUB / 10 USD / oy'
         ),
         
         'profile_text': (
@@ -755,6 +781,8 @@ TRANSLATIONS = {
             '📞 Konsultatsiya uchun <b>«🆘 Yordam»</b>dan foydalaning'
         ),
         'btn_instagram': '📸 Instagram',
+        'btn_tiktok': '🎵 TikTok',
+        'btn_youtube': '▶️ YouTube',
         'btn_reviews': '💬 Sharhlar',
         'btn_website': '🌐 Veb-sayt',
         

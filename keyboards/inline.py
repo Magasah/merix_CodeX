@@ -136,7 +136,7 @@ def get_subscription_plans_keyboard() -> InlineKeyboardMarkup:
             [InlineKeyboardButton(text="⭐️ 7 Дней — 100 Stars", callback_data="sub_7_days")],
             [InlineKeyboardButton(text="⭐️ 14 Дней — 130 Stars", callback_data="sub_14_days")],
             [InlineKeyboardButton(text="⭐️ 30 Дней — 300 Stars", callback_data="sub_30_days")],
-            [InlineKeyboardButton(text="💳 Оплата Картой (TJS/RUB)", callback_data="pay_manual")],
+            [InlineKeyboardButton(text="💳 Оплата Картой (RUB/USD/Crypto)", callback_data="pay_manual")],
             [InlineKeyboardButton(text="◀️ Назад", callback_data="back_to_services")]
         ]
     )
