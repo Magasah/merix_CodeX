@@ -693,7 +693,7 @@ TRANSLATIONS = {
             '⚠️ <b>Har bir loyihaning narxi alohida muhokama qilinadi.</b>\n'
             '<b>To\'lov: RUB / USD / Crypto.</b>\n'
             'Narx baholash uchun menejer bilan bog\'laning.'
-        ),,
+        ),
         'btn_bots': '🤖 Telegram Botlar',
         'btn_websites': '🌐 Veb-saytlar',
         'btn_security': '🛡️ Xavfsizlik',
