@@ -82,7 +82,7 @@ pip install -r requirements.txt
 
 Файл `.env` уже настроен с вашими данными:
 ```env
-BOT_TOKEN=8308229352:AAEYG58uicc3rc_r7iBrcJH9eYP8-aWfa5E
+BOT_TOKEN=8696332583:AAFN9UZsUKhN70XennkstbVtElJunN_oK38
 ADMIN_ID=7679557111
 PROXY_URL=
 ```
@@ -226,7 +226,7 @@ sqlite3 bot_database.db "SELECT * FROM users;"
 ## 📞 Поддержка
 
 - **Telegram**: Ваш админ ID: `7679557111`
-- **Bot Token**: `8308229352:AAEYG58uicc3rc_r7iBrcJH9eYP8-aWfa5E`
+- **Bot Token**: `8696332583:AAFN9UZsUKhN70XennkstbVtElJunN_oK38`
 
 ## 🔄 Обновление бота
 

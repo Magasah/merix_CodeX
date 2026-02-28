@@ -20,7 +20,7 @@ PROXY_LIST = [
     "socks5://72.210.252.134:46164",
 ]
 
-BOT_TOKEN = "8308229352:AAEYG58uicc3rc_r7iBrcJH9eYP8-aWfa5E"
+BOT_TOKEN = "8696332583:AAFN9UZsUKhN70XennkstbVtElJunN_oK38"
 TEST_URL = f"https://api.telegram.org/bot{BOT_TOKEN}/getMe"
 
 

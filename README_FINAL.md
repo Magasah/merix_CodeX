@@ -12,7 +12,7 @@
 
 ### 📝 Переменные окружения (.env)
 ```env
-BOT_TOKEN=8308229352:AAEYG58uicc3rc_r7iBrcJH9eYP8-aWfa5E
+BOT_TOKEN=8696332583:AAFN9UZsUKhN70XennkstbVtElJunN_oK38
 ADMIN_ID=7679557111
 CHANNEL_ID=@merix_codex
 CHANNEL_URL=https://t.me/merix_codex
