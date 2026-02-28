@@ -4,6 +4,7 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from keyboards.inline import get_services_keyboard, get_service_detail_keyboard
 from translations import get_text
 import database as db
+import config
 
 router = Router()
 
@@ -59,7 +60,7 @@ async def show_service_detail(callback: types.CallbackQuery):
         
         keyboard = InlineKeyboardMarkup(
             inline_keyboard=[
-                [InlineKeyboardButton(text="👨‍💻 Обсудить заказ", url="https://t.me/noxsec")],
+                [InlineKeyboardButton(text="👨‍💻 Связаться с админом", url=f"tg://user?id={config.ADMIN_ID}")],
                 [InlineKeyboardButton(text=get_text(user_lang, 'btn_back'), callback_data="back_to_services")]
             ]
         )

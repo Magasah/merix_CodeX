@@ -47,7 +47,7 @@ TRANSLATIONS = {
             '<b>📂 Выберите категорию услуг:</b>\n\n'
             '⚠️ <b>Стоимость каждого проекта обсуждается индивидуально.</b>\n'
             '<b>Оплата: RUB / USD / Crypto.</b>\n'
-            'Для оценки стоимости и ТЗ пишите менеджеру.'
+            'Для оценки стоимости и ТЗ пишите администратору.'
         ),
         'btn_bots': '🤖 Telegram Боты',
         'btn_websites': '🌐 Веб-сайты',
@@ -201,10 +201,10 @@ TRANSLATIONS = {
             '3. Нажмите <b>✅ Заказать</b>\n'
             '4. Опишите вашу задачу\n\n'
             '<b>Нужна консультация?</b>\n'
-            'Свяжитесь с нашим менеджером напрямую, нажав кнопку ниже.\n\n'
+            'Свяжитесь с администратором Telegram, нажав кнопку ниже.\n\n'
             '⏰ Мы всегда на связи!'
         ),
-        'btn_manager': '👨‍💻 Менеджер',
+        'btn_manager': '👨‍💻 Администратор',
         
         # Заказ
         'order_description': (
@@ -225,7 +225,7 @@ TRANSLATIONS = {
         'btn_cancel': '❌ Отменить',
         'order_sent': (
             '✅ <b>Заявка успешно отправлена!</b>\n\n'
-            'Наш менеджер свяжется с вами в ближайшее время.\n\n'
+            'Наш администратор свяжется с вами в ближайшее время.\n\n'
             '⏰ Среднее время ответа: 1-2 часа'
         ),
         'order_cancelled': '❌ <b>Заявка отменена</b>\n\nВы можете оформить новую заявку в любое время.',
@@ -318,7 +318,7 @@ TRANSLATIONS = {
             '<b>📂 Choose a service category:</b>\n\n'
             '⚠️ <b>The cost of each project is discussed individually.</b>\n'
             '<b>Payment: RUB / USD / Crypto.</b>\n'
-            'Contact manager for cost estimate and requirements.'
+            'Contact the administrator for cost estimate and requirements.'
         ),
         'btn_bots': '🤖 Telegram Bots',
         'btn_websites': '🌐 Websites',
@@ -420,10 +420,11 @@ TRANSLATIONS = {
             '3. Click <b>✅ Order</b>\n'
             '4. Describe your task\n\n'
             '<b>Need help?</b>\n'
-            '👨‍💼 Contact our manager:\n'
+            '👨‍💼 Contact our administrator:\n'
             '{admin_link}\n\n'
             '⏰ We are always available!'
         ),
+        'btn_manager': '👨‍💻 Administrator',
         
         'order_description': (
             '📝 <b>Ordering: {service}</b>\n\n'
@@ -443,7 +444,7 @@ TRANSLATIONS = {
         'btn_cancel': '❌ Cancel',
         'order_sent': (
             '✅ <b>Request sent successfully!</b>\n\n'
-            'Our manager will contact you shortly.\n\n'
+            'Our administrator will contact you shortly.\n\n'
             '⏰ Average response time: 1-2 hours'
         ),
         'order_cancelled': '❌ <b>Request cancelled</b>\n\nYou can create a new request anytime.',
@@ -505,7 +506,7 @@ TRANSLATIONS = {
             '<b>📂 Категорияи хизматро интихоб кунед:</b>\n\n'
             '⚠️ <b>Арзиши ҳар лоиҳа алоҳида баррасӣ мешавад.</b>\n'
             '<b>Пардохт: RUB / USD / Crypto.</b>\n'
-            'Барои баҳодиҳӣ ба менеҷер нависед.'
+            'Барои баҳодиҳӣ ба администратор нависед.'
         ),
         'btn_bots': '🤖 Ботҳои Telegram',
         'btn_websites': '🌐 Сомонаҳо',
@@ -607,10 +608,11 @@ TRANSLATIONS = {
             '3. <b>✅ Фармоиш</b>-ро пахш кунед\n'
             '4. Вазифаи худро тавсиф кунед\n\n'
             '<b>Кӯмак лозим аст?</b>\n'
-            '👨‍💼 Бо менеҷери мо тамос гиред:\n'
+            '👨‍💼 Бо администратори мо тамос гиред:\n'
             '{admin_link}\n\n'
             '⏰ Мо ҳамеша дар дастрас ҳастем!'
         ),
+        'btn_manager': '👨‍💻 Администратор',
         
         'order_description': (
             '📝 <b>Фармоиш: {service}</b>\n\n'
@@ -630,7 +632,7 @@ TRANSLATIONS = {
         'btn_cancel': '❌ Бекор кардан',
         'order_sent': (
             '✅ <b>Дархост муваффақона фиристода шуд!</b>\n\n'
-            'Менеҷери мо ба зудӣ бо шумо тамос мегирад.\n\n'
+            'Администратори мо ба зудӣ бо шумо тамос мегирад.\n\n'
             '⏰ Вақти миёнаи ҷавоб: 1-2 соат'
         ),
         'order_cancelled': '❌ <b>Дархост бекор карда шуд</b>\n\nШумо метавонед дархости навро дар ҳар вақт эҷод кунед.',
@@ -692,7 +694,7 @@ TRANSLATIONS = {
             '<b>📂 Xizmat kategoriyasini tanlang:</b>\n\n'
             '⚠️ <b>Har bir loyihaning narxi alohida muhokama qilinadi.</b>\n'
             '<b>To\'lov: RUB / USD / Crypto.</b>\n'
-            'Narx baholash uchun menejer bilan bog\'laning.'
+            'Narx baholash uchun administrator bilan bog\'laning.'
         ),
         'btn_bots': '🤖 Telegram Botlar',
         'btn_websites': '🌐 Veb-saytlar',
@@ -794,10 +796,11 @@ TRANSLATIONS = {
             '3. <b>✅ Buyurtma</b>ni bosing\n'
             '4. Vazifangizni tasvirlab bering\n\n'
             '<b>Yordam kerakmi?</b>\n'
-            '👨‍💼 Menejerimiz bilan bog\'laning:\n'
+            '👨‍💼 Administratorimiz bilan bog\'laning:\n'
             '{admin_link}\n\n'
             '⏰ Biz doim aloqadamiz!'
         ),
+        'btn_manager': '👨‍💻 Administrator',
         
         'order_description': (
             '📝 <b>Buyurtma: {service}</b>\n\n'
@@ -817,7 +820,7 @@ TRANSLATIONS = {
         'btn_cancel': '❌ Bekor qilish',
         'order_sent': (
             '✅ <b>So\'rov muvaffaqiyatli yuborildi!</b>\n\n'
-            'Menejerimiz tez orada siz bilan bog\'lanadi.\n\n'
+            'Administratorimiz tez orada siz bilan bog\'lanadi.\n\n'
             '⏰ O\'rtacha javob vaqti: 1-2 soat'
         ),
         'order_cancelled': '❌ <b>So\'rov bekor qilindi</b>\n\nIstalgan vaqtda yangi so\'rov yaratishingiz mumkin.',

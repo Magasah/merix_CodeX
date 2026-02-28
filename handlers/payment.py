@@ -19,6 +19,14 @@ router = Router()
 @router.callback_query(F.data == "topup_balance")
 async def topup_balance_start(callback: types.CallbackQuery, state: FSMContext):
     """Начинает процесс пополнения баланса"""
+    if not config.YOOMONEY_ENABLED:
+        await callback.answer("⚠️ Платежи временно недоступны", show_alert=True)
+        await callback.message.answer(
+            text="⚠️ <b>Платежная система временно не настроена.</b>\n\nОбратитесь к администратору.",
+            parse_mode="HTML"
+        )
+        return
+
     await callback.message.answer(
         text=(
             "💳 <b>Пополнение баланса</b>\n\n"
@@ -113,6 +121,10 @@ async def process_payment_amount(message: types.Message, state: FSMContext):
 @router.callback_query(F.data.startswith("check_pay_"))
 async def check_payment_status(callback: types.CallbackQuery, state: FSMContext):
     """Проверяет статус платежа через YooMoney API"""
+    if not config.YOOMONEY_TOKEN:
+        await callback.answer("⚠️ Проверка платежа недоступна", show_alert=True)
+        return
+
     user_id = callback.from_user.id
     
     # Извлекаем label и amount из callback_data

@@ -3,6 +3,7 @@ Inline клавиатуры (кнопки под сообщениями)
 """
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from translations import get_text
+import config
 
 
 def get_services_keyboard(lang: str = 'ru', page: int = 1) -> InlineKeyboardMarkup:
@@ -106,11 +107,11 @@ def get_settings_keyboard(lang: str = 'ru') -> InlineKeyboardMarkup:
     return keyboard
 
 
-def get_help_keyboard() -> InlineKeyboardMarkup:
+def get_help_keyboard(lang: str = 'ru') -> InlineKeyboardMarkup:
     """Создает клавиатуру для раздела помощи"""
     keyboard = InlineKeyboardMarkup(
         inline_keyboard=[
-            [InlineKeyboardButton(text="👨‍💻 Менеджер", url="https://t.me/noxsec")]
+            [InlineKeyboardButton(text=get_text(lang, 'btn_manager'), url=f"tg://user?id={config.ADMIN_ID}")]
         ]
     )
     return keyboard

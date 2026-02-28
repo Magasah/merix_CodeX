@@ -19,6 +19,10 @@ router = Router()
 @router.callback_query(F.data == "create_invoice")
 async def create_invoice_start(callback: types.CallbackQuery, state: FSMContext):
     """Начинает процесс создания счёта (только для admin/manager)"""
+    if not config.YOOMONEY_ENABLED:
+        await callback.answer("⚠️ YooMoney не настроен", show_alert=True)
+        return
+
     user_id = callback.from_user.id
     
     # SECURITY: Проверка прав доступа

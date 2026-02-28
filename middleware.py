@@ -2,11 +2,14 @@
 Middleware для проверки обязательной подписки на канал
 """
 from typing import Callable, Dict, Any, Awaitable
+import logging
 from aiogram import BaseMiddleware
 from aiogram.types import TelegramObject, InlineKeyboardMarkup, InlineKeyboardButton, Message, CallbackQuery
 import config
 from translations import get_text
 import database as db
+
+logger = logging.getLogger(__name__)
 
 
 class ChannelSubscriptionMiddleware(BaseMiddleware):
@@ -14,6 +17,7 @@ class ChannelSubscriptionMiddleware(BaseMiddleware):
     Middleware для проверки подписки пользователя на канал
     Блокирует доступ к боту если пользователь не подписан
     """
+    _member_list_warning_logged = False
     
     async def __call__(
         self,
@@ -52,9 +56,13 @@ class ChannelSubscriptionMiddleware(BaseMiddleware):
                 return  # Блокируем дальнейшее выполнение
             
         except Exception as e:
-            # Если произошла ошибка (например, бот не админ канала), логируем и пропускаем
-            print(f"⚠️ Ошибка проверки подписки: {e}")
-            # В production лучше блокировать доступ, но для разработки пропускаем
+            error_text = str(e).lower()
+            if "member list is inaccessible" in error_text:
+                if not self._member_list_warning_logged:
+                    logger.warning("⚠️ Проверка подписки недоступна: member list is inaccessible")
+                    self._member_list_warning_logged = True
+            else:
+                logger.warning(f"⚠️ Ошибка проверки подписки: {e}")
             pass
         
         # Пользователь подписан - продолжаем обработку

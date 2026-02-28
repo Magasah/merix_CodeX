@@ -105,7 +105,7 @@ nano .env
 
 Добавьте:
 ```env
-BOT_TOKEN=8696332583:AAFN9UZsUKhN70XennkstbVtElJunN_oK38
+BOT_TOKEN=your_bot_token_here
 ADMIN_ID=7679557111
 CHANNEL_ID=@merix_codex
 CHANNEL_URL=https://t.me/merix_codex

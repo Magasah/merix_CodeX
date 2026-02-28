@@ -8,8 +8,11 @@ __pycache__/
 *.so
 .Python
 venv/
+.venv/
 env/
 ENV/
+*.log
+bot_database.db
 
 # IDE
 .vscode/
